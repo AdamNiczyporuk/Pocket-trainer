@@ -11,6 +11,7 @@ class Program
         while (!exit)
         {
             // Tworzenie prompta z opcjami menu
+                         
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[yellow]Wybierz opcję:[/]")
@@ -48,3 +49,4 @@ class Program
         }
     }
 }
+
