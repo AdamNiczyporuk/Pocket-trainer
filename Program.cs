@@ -104,6 +104,7 @@ class Program
         // Simulating login validation (you can replace this with your own logic)
         if (ValidateLogin(username, password))
         {
+            Panel();
             AnsiConsole.MarkupLine("[green]Login successful![/]");
         }
         else
@@ -116,6 +117,7 @@ class Program
         // Replace with real login logic
         return username == "admin" && password == "password123";
     }
+
     static void Main()
     {
         StartMenu();
