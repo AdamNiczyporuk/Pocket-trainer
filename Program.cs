@@ -47,7 +47,49 @@ class Program
             }
         }
     }
-    static void LoginMenu()
+
+    static void StartMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            // Tworzenie prompta z opcjami menu
+
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow]Wybierz opcję:[/]")
+                    .PageSize(10)
+                    .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
+                    .AddChoices(new[] {
+                        "Log IN", "Sign IN", "Exit"
+                    })
+                    .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
+
+            // Obsługa wsybranej opcji
+            switch (option)
+            {
+                case "Log IN":
+                    AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 1![/]");
+                    break;
+                case "Sign IN":
+                    AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 2![/]");
+                    break;
+                case "Exit":
+                    AnsiConsole.MarkupLine("[red]Koniec programu.[/]");
+                    exit = true;
+                    break;
+            }
+
+            // Czekaj na naciśnięcie klawisza przed powrotem do menu, jeśli użytkownik nie wybrał wyjścia
+            if (!exit)
+            {
+                AnsiConsole.MarkupLine("[grey]Naciśnij dowolny klawisz, aby wrócić do menu...[/]");
+                Console.ReadKey();
+            }
+        }
+    }
+    static void LogIN()
     {
         bool exit = false;
 
@@ -90,7 +132,7 @@ class Program
     }
     static void Main()
     {
-        LoginMenu();
+        StartMenu();
        
     }
 }
