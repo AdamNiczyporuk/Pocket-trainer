@@ -1,12 +1,13 @@
 ﻿using Spectre.Console;
 using System;
+using System.Data;
 
 class Program
 { 
     static void Panel()
     {
         bool exit = false;
-
+        Console.Clear();
         while (!exit)
         {
             // Tworzenie prompta z opcjami menu
@@ -50,6 +51,7 @@ class Program
 
     static void StartMenu()
     {
+        Console.Clear();
         bool exit = false;
 
         while (!exit)
@@ -92,6 +94,7 @@ class Program
     }
     static void LogIN()
     {
+       
         // Display the login view
         var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
 
@@ -104,6 +107,7 @@ class Program
         // Simulating login validation (you can replace this with your own logic)
         if (ValidateLogin(username, password))
         {
+            
             Panel();
             AnsiConsole.MarkupLine("[green]Login successful![/]");
         }
@@ -115,7 +119,7 @@ class Program
     static bool ValidateLogin(string username, string password)
     {
         // Replace with real login logic
-        return username == "admin" && password == "password123";
+        return username == "admin" && password == "admin";
     }
 
     static void Main()
