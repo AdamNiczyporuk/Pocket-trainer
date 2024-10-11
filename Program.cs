@@ -18,23 +18,23 @@ class Program
                     .PageSize(10)
                     .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
                     .AddChoices(new[] {
-                        "Opcja 1", "Opcja 2", "Opcja 3", "Wyjście"
+                        "Add trening", "See Data", "Write Diet","Settings" ,"Exit"
                     })
                     .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
 
             // Obsługa wsybranej opcji
             switch (option)
             {
-                case "Opcja 1":
+                case "Add trening":
                     AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 1![/]");
                     break;
-                case "Opcja 2":
+                case "See Data":
                     AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 2![/]");
                     break;
-                case "Opcja 3":
+                case "Settings":
                     AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 3![/]");
                     break;
-                case "Wyjście":
+                case "Exit":
                     AnsiConsole.MarkupLine("[red]Koniec programu.[/]");
                     exit = true;
                     break;
@@ -76,6 +76,7 @@ class Program
                     AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 1![/]");
                     break;
                 case "Sign IN":
+                    SignIN();
                     AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 2![/]");
                     break;
                 case "Exit":
@@ -92,6 +93,20 @@ class Program
             }
         }
     }
+    static void SignIN()
+    {// Display the login view
+        Console.Clear();
+        var mail = AnsiConsole.Ask<string>("Enter your [yellow]E-mail[/]:");
+        var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
+        var password = AnsiConsole.Prompt(
+                       new TextPrompt<string>("Enter your [yellow]Password[/]:")
+                                      .PromptStyle("red")
+                                                     .Secret());  // Mask the input for password
+        Panel();
+
+       
+       
+    }
     static void LogIN()
     {
        
@@ -104,6 +119,14 @@ class Program
                 .PromptStyle("red")
                 .Secret());  // Mask the input for password
 
+        AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow]Wybierz opcję:[/]")
+                    .PageSize(10)
+                    .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
+                    .AddChoices(new[] {
+                       "Exit"
+                    }).HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
         // Simulating login validation (you can replace this with your own logic)
         if (ValidateLogin(username, password))
         {
