@@ -109,40 +109,79 @@ class Program
     }
     static void LogIN()
     {
+        string username = string.Empty;
+        string password = string.Empty;
+
         while (true)
         {
-            // Wyświetlenie opcji logowania
-            var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
-            var password = AnsiConsole.Prompt(
+            // Kafelek dla nazwy użytkownika
+            var usernamePanel = new Panel("[yellow]Enter your Username:[/]\n" + username)
+            {
+                Border = BoxBorder.Square,
+                Header = new PanelHeader("Username"),
+                Padding = new Padding(2)
+            };
+            AnsiConsole.Render(usernamePanel);
+
+            // Kafelek dla hasła
+            var passwordPanel = new Panel("[yellow]Enter your Password:[/]\n" + new string('*', password.Length))
+            {
+                Border = BoxBorder.Square,
+                Header = new PanelHeader("Password"),
+                Padding = new Padding(2)
+            };
+            AnsiConsole.Render(passwordPanel);
+
+            // Kafelek dla opcji
+            var exitPanel = new Panel("[yellow]Choose an option:[/]\n[green]1. Login[/]\n[red]2. Exit[/]")
+            {
+                Border = BoxBorder.Square,
+                Header = new PanelHeader("Options"),
+                Padding = new Padding(2)
+            };
+            AnsiConsole.Render(exitPanel);
+
+            // Odczyt danych
+            username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
+            password = AnsiConsole.Prompt(
                 new TextPrompt<string>("Enter your [yellow]Password[/]:")
                     .PromptStyle("red")
                     .Secret());
 
-            // Wyświetlenie opcji wyboru
-            var option = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[yellow]Choose an option:[/]")
-                    .AddChoices(new[] { "Login", "Exit" })
-                    .HighlightStyle(new Style(foreground: Color.Aqua)));
+            // Odczyt wyboru
+            var choice = AnsiConsole.Ask<int>("Choose an option ([green]1[/] or [red]2[/]):");
 
-            if (option == "Exit")
+            if (choice == 2) // Wyjście
             {
                 AnsiConsole.MarkupLine("[red]Exiting the application...[/]");
                 break; // Wyjście z pętli i zakończenie aplikacji
             }
-
-            // Symulacja walidacji logowania (możesz zastąpić to własną logiką)
-            if (ValidateLogin(username, password))
+            else if (choice == 1) // Logowanie
             {
-                AnsiConsole.MarkupLine("[green]Login successful![/]");
-                break; // Możesz tu dodać kod, który uruchamia aplikację po zalogowaniu
+                // Symulacja walidacji logowania
+                if (ValidateLogin(username, password))
+                {
+                    AnsiConsole.MarkupLine("[green]Login successful![/]");
+                    break; // Możesz tu dodać kod, który uruchamia aplikację po zalogowaniu
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Invalid username or password![/]");
+                }
             }
             else
             {
-                AnsiConsole.MarkupLine("[red]Invalid username or password![/]");
+                AnsiConsole.MarkupLine("[red]Invalid option! Please choose 1 or 2.[/]");
             }
+
+            // Czekaj na naciśnięcie klawisza przed powrotem do menu
+            AnsiConsole.MarkupLine("[grey]Press any key to try again...[/]");
+            Console.ReadKey(true);
+            Console.Clear(); // Czyści konsolę przed kolejną próbą
         }
     }
+
+ 
 
     // Metoda symulująca walidację logowania
     static bool ValidateLogin(string username, string password)
