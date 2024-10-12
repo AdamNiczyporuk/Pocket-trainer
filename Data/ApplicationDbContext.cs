@@ -18,7 +18,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Data
         public DbSet<ExerciseDone> ExercisesDone { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TreningPartnerDatabase;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TP_DB;Trusted_Connection=True;");
         }
     }
 }
