@@ -119,14 +119,14 @@ class Program
                 .PromptStyle("red")
                 .Secret());  // Mask the input for password
 
-        AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[yellow]Wybierz opcję:[/]")
-                    .PageSize(10)
-                    .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
-                    .AddChoices(new[] {
-                       "Exit"
-                    }).HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
+        //AnsiConsole.Prompt(
+        //        new SelectionPrompt<string>()
+        //            .Title("[yellow]Wybierz opcję:[/]")
+        //            .PageSize(10)
+        //            .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
+        //            .AddChoices(new[] {
+        //               "Exit"
+        //            }).HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
         // Simulating login validation (you can replace this with your own logic)
         if (ValidateLogin(username, password))
         {
