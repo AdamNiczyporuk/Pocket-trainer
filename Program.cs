@@ -18,25 +18,25 @@ class Program
                     .PageSize(10)
                     .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
                     .AddChoices(new[] {
-                        "Add trening", "See Data", "Write Diet","Settings" ,"Exit"
+                        "Add Training", "See Data", "Write Diet","Settings" ,"Exit"
                     })
                     .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
 
             // Obsługa wsybranej opcji
             switch (option)
             {
-                case "Add trening":
-                    AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 1![/]");
+                case "Add Training":
+                    AnsiConsole.MarkupLine("[green]Add Training![/]");
                     break;
                 case "See Data":
-                    AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 2![/]");
+                    AnsiConsole.MarkupLine("[green]See Data![/]");
                     break;
                 case "Settings":
-                    AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 3![/]");
+                    AnsiConsole.MarkupLine("[green]Settings![/]");
                     break;
                 case "Exit":
-                    AnsiConsole.MarkupLine("[red]Koniec programu.[/]");
-                    exit = true;
+                    AnsiConsole.MarkupLine("[red]Program End.[/]");
+                    StartMenu();
                     break;
             }
 
@@ -95,15 +95,54 @@ class Program
     }
     static void SignIN()
     {// Display the login view
-        Console.Clear();
-        var mail = AnsiConsole.Ask<string>("Enter your [yellow]E-mail[/]:");
-        var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
-        var password = AnsiConsole.Prompt(
-                       new TextPrompt<string>("Enter your [yellow]Password[/]:")
-                                      .PromptStyle("red")
-                                                     .Secret());  // Mask the input for password
-        Panel();
 
+  
+        while (true)
+        {
+            var mail = AnsiConsole.Ask<string>("Enter your [yellow]E-mail[/]:");
+            var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
+            var password = AnsiConsole.Prompt(
+                           new TextPrompt<string>("Enter your [yellow]Password[/]:")
+                                          .PromptStyle("red")
+                                                         .Secret());  // Mask the input for password
+
+            // Wyświetlenie opcji wyboru
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow]Choose an option:[/]")
+                    .AddChoices(new[] { "SignIN", "Exit" })
+                    .HighlightStyle(new Style(foreground: Color.Aqua)));
+
+            if (option == "Exit")
+            {
+                AnsiConsole.MarkupLine("[red]Exiting the application...[/]");
+                break; // Wyjście z pętli i zakończenie aplikacji
+            }
+            if (option == "SignIN")
+            {
+                if (mail == "" || username == "" || password == "")
+                {
+                    AnsiConsole.MarkupLine("[red]Invalid username or password![/]");
+                    SignIN();
+                }
+                else if (mail.Contains("@") == false)
+                {
+                    AnsiConsole.MarkupLine("[red]Invalid email![/]");
+                    SignIN();
+                }
+                else
+                {
+                    // Check if the user already exists
+                    // Seraching user thorugh Mail a
+                    //Validate password and Username
+                    // Add the user to the database
+                    // AddUserToDatabase(mail, username, password);
+                    AnsiConsole.MarkupLine("[green]User added successfully![/]");
+                }
+                Panel();
+            }
+            
+        }
        
        
     }
@@ -135,6 +174,8 @@ class Program
             if (ValidateLogin(username, password))
             {
                 Panel();
+                break;
+
             }
             else
             {
@@ -147,7 +188,7 @@ class Program
     static bool ValidateLogin(string username, string password)
     {
         // Przykładowa walidacja - zastąp to własną logiką
-        return username == "user" && password == "password";
+        return username == "admin" && password == "admin";
     }
 
 
