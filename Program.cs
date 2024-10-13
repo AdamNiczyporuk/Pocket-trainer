@@ -14,8 +14,8 @@ class Program
         // Wywołanie metody pobierającej dane z API
         string result = await api.GetExerciseData(muscle);
 
-        // Wyświetlenie odpowiedzi z API na konsoli
-        Console.WriteLine(result);
+       
+       
     }
     static void Panel()
     {
