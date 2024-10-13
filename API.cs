@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Spectre.Console.Rendering;
 using Newtonsoft.Json;
 using Microsoft.Identity.Client;
+using KCK_Project__Console_Pocket_trainer_.Models;
+using System.Collections.Generic;
+using KCK_Project__Console_Pocket_trainer_.Data;
 
 namespace KCK_Project__Console_Pocket_trainer_.Repositories
 {
@@ -48,9 +51,21 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
                 {
                     // Jeśli odpowiedź jest poprawna, zwróć treść odpowiedzi
                     var jsonResponse= await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Response JSON:");
-                    Console.WriteLine(jsonResponse);
+                    //Console.WriteLine("Response JSON:");
+                    //Console.WriteLine(jsonResponse);
+                    var exercises = JsonConvert.DeserializeObject<List<Exercise>>(jsonResponse);
                     //return await response.Content.ReadAsStringAsync();
+                    using (var context = new ApplicationDbContext())
+                    {
+                        foreach (var exercise in exercises)
+                        {
+                            context.Exercises.Add(exercise);
+                        }
+                        await context.SaveChangesAsync(); // Zapisuje zmiany do bazy danych
+                    }
+
+                    // Wyświetlenie pierwszego ćwiczenia jako przykład
+                    Console.WriteLine("Exercises have been saved to the database.");
                 }
                 else
                 {

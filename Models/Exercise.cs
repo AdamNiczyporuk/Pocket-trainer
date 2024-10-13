@@ -11,7 +11,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public string Muslce { get; set; }
+        public string Muscle { get; set; }
         public string Equipment { get; set; }
         public string Difficulty { get; set; }
 
