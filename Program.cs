@@ -12,7 +12,7 @@ class Program
         string muscle = "biceps";
 
         // Wywołanie metody pobierającej dane z API
-        string result = await api.GetExerciseData(muscle);
+         await api.GetExerciseData(muscle);
 
        
        

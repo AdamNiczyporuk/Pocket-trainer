@@ -33,7 +33,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> GetExerciseData(string muscle)
+        public  async Task GetExerciseData(string muscle)
         {
             string apiUrl = $"https://api.api-ninjas.com/v1/exercises?muscle={muscle}";
             var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
@@ -48,19 +48,20 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
                 {
                     // Jeśli odpowiedź jest poprawna, zwróć treść odpowiedzi
                     var jsonResponse= await response.Content.ReadAsStringAsync();
-
-                    return await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("Response JSON:");
+                    Console.WriteLine(jsonResponse);
+                    //return await response.Content.ReadAsStringAsync();
                 }
                 else
                 {
                     // Jeśli kod odpowiedzi nie jest OK, zwróć szczegóły błędu
-                    return $"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}";
+                    Console.WriteLine($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
                 }
             }
             catch (Exception ex)
             {
                 // Obsługa wyjątków w przypadku problemów z zapytaniem
-                return $"Exception occurred: {ex.Message}";
+                Console.WriteLine($"Exception occurred: {ex.Message}") ;
             }
         }
     }
