@@ -1,9 +1,22 @@
-﻿using Spectre.Console;
+﻿using KCK_Project__Console_Pocket_trainer_.Repositories;
+using Spectre.Console;
 using System;
 using System.Data;
+using System.Threading.Tasks;
 
 class Program
-{ 
+{
+    static async Task Main()
+    {
+        API api = new API();
+        string muscle = "biceps";
+
+        // Wywołanie metody pobierającej dane z API
+        string result = await api.GetExerciseData(muscle);
+
+        // Wyświetlenie odpowiedzi z API na konsoli
+        Console.WriteLine(result);
+    }
     static void Panel()
     {
         bool exit = false;
@@ -193,10 +206,6 @@ class Program
 
 
 
-    static void Main()
-    {
-        StartMenu();
-       
-    }
+   
 }
 
