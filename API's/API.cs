@@ -13,10 +13,13 @@ using KCK_Project__Console_Pocket_trainer_.Models;
 using System.Collections.Generic;
 using KCK_Project__Console_Pocket_trainer_.Data;
 
-namespace Repositories
+namespace APIS
 {
+
     public class API
     {
+        public static IConfiguration Configuration { get; private set; }
+       
 
         private readonly HttpClient _httpClient;
         private string apiKey;
@@ -34,6 +37,13 @@ namespace Repositories
         public API()
         {
             _httpClient = new HttpClient();
+            var builder = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory()) // Ustawienie ścieżki do katalogu wyjściowego
+           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true); // Wczytanie pliku JSON
+
+            Configuration = builder.Build();
+
+            apiKey = Configuration["ExerciseApi:sApiKey"];
         }
 
         public async Task GetExerciseData(string muscle)

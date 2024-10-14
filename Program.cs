@@ -1,13 +1,14 @@
-﻿using KCK_Project__Console_Pocket_trainer_.Repositories;
-using Spectre.Console;
+﻿using Spectre.Console;
 using System;
 using System.Data;
 using System.Threading.Tasks;
-
+using CHATAPI; 
 class Program
 {
     static async Task Main()
     {
+        ChatGPT_diet.SetUpSetting();
+       
         // API Donloader
         //API api = new API();
 
