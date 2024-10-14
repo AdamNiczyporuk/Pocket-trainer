@@ -15,7 +15,7 @@ using KCK_Project__Console_Pocket_trainer_.Data;
 
 namespace KCK_Project__Console_Pocket_trainer_.Repositories
 {
-    internal class API
+    public  class API
     {
         
         private readonly HttpClient _httpClient;
