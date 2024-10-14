@@ -8,10 +8,7 @@ class Program
 {
     static async Task Main()
     {
-        ChatGPT_diet.SetUpSetting();
-        String Prompt = "Write me a diet plan";
-        var response = await ChatGPT_diet.SendRequestToChatGPT(Prompt);
-        Console.Write(response);
+        
         // API Donloader
         //API api = new API();
 
@@ -40,12 +37,23 @@ class Program
         //    // Wywołanie metody pobierającej dane z API
         //    await api.GetExerciseData(muscle);
         //}
-        //StartMenu();
+        StartMenu();
 
 
 
     }
-    static void Panel()
+    static async Task Diet()
+    {
+        ChatGPT_diet.SetUpSetting();
+        String Prompt = "My weigh=87kg,Height=186cm,TrainingsPerWeek=6trainingPerWeek.Write me a diet plan for 7 seven days";
+        var response = await ChatGPT_diet.SendRequestToChatGPT(Prompt);
+        while (true)
+        {
+            AnsiConsole.MarkupLine(response);
+        }
+        
+    }
+    static  void  Panel()
     {
         bool exit = false;
         Console.Clear();
@@ -71,6 +79,9 @@ class Program
                     break;
                 case "See Data":
                     AnsiConsole.MarkupLine("[green]See Data![/]");
+                    break;
+                case "Write Diet":
+                    Diet();
                     break;
                 case "Settings":
                     AnsiConsole.MarkupLine("[green]Settings![/]");
