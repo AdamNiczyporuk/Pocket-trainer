@@ -13,21 +13,21 @@ using KCK_Project__Console_Pocket_trainer_.Models;
 using System.Collections.Generic;
 using KCK_Project__Console_Pocket_trainer_.Data;
 
-namespace KCK_Project__Console_Pocket_trainer_.Repositories
+namespace Repositories
 {
-    public  class API
+    public class API
     {
-        
+
         private readonly HttpClient _httpClient;
         private string apiKey;
         private string LoadApiKey()
         {
             // Zakładamy, że plik z kluczem znajduje się w katalogu roboczym
             StreamReader sr = new StreamReader("D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\KCK\\KCK_Project_ Console(Pocket trainer)\\config.txt");
-            String line = sr.ReadLine();
-            
+            string line = sr.ReadLine();
 
-            return  line;
+
+            return line;
         }
 
 
@@ -36,11 +36,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
             _httpClient = new HttpClient();
         }
 
-        public  async Task GetExerciseData(string muscle)
+        public async Task GetExerciseData(string muscle)
         {
             string apiUrl = $"https://api.api-ninjas.com/v1/exercises?muscle={muscle}";
             var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
-            string APIKey=LoadApiKey();
+            string APIKey = LoadApiKey();
             request.Headers.Add("X-Api-Key", APIKey);
 
             try
@@ -50,7 +50,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
                 if (response.IsSuccessStatusCode)
                 {
                     // Jeśli odpowiedź jest poprawna, zwróć treść odpowiedzi
-                    var jsonResponse= await response.Content.ReadAsStringAsync();
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
                     //Console.WriteLine("Response JSON:");
                     //Console.WriteLine(jsonResponse);
                     var exercises = JsonConvert.DeserializeObject<List<Exercise>>(jsonResponse);
@@ -76,7 +76,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
             catch (Exception ex)
             {
                 // Obsługa wyjątków w przypadku problemów z zapytaniem
-                Console.WriteLine($"Exception occurred: {ex.Message}") ;
+                Console.WriteLine($"Exception occurred: {ex.Message}");
             }
         }
     }
