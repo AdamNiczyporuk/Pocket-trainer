@@ -24,45 +24,45 @@ namespace CHATAPI
 
             IConfiguration configuration = builder.Build();
             
-            apiKey = configuration["ChatGPT:ApiKey"];
-            apiURL = configuration["ChatGPT:ApiUrl"];
+            apiKey = configuration["ChatApi:ApiKey"];
+            apiURL = configuration["ChatApi:ApiUrl"];
 
         }
-        //public static async Task<string> SendRequestToChatGPT(string prompt)
-        //{
-        //    using (HttpClient client = new HttpClient())
-        //    {
-        //        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+        public static async Task<string> SendRequestToChatGPT(string prompt)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
 
-        //        var requestData = new
-        //        {
-        //            model = "gpt-3.5-turbo",
-        //            messages = new[]
-        //            {
-        //            new { role = "system", content = "You are a helpful assistant." },
-        //            new { role = "user", content = prompt }
-        //        },
-        //            max_tokens = 100,
-        //            temperature = 0.7
-        //        };
+                var requestData = new
+                {
+                    model = "gpt-3.5-turbo",
+                    messages = new[]
+                    {
+                    new { role = "system", content = "You are a helpful assistant." },
+                    new { role = "user", content = prompt }
+                },
+                    max_tokens = 100,
+                    temperature = 0.7
+                };
 
-        //        var json = JsonConvert.SerializeObject(requestData);
-        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var json = JsonConvert.SerializeObject(requestData);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        //        var response = await client.PostAsync(apiURL, content);
+                var response = await client.PostAsync(apiURL, content);
 
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var responseString = await response.Content.ReadAsStringAsync();
-        //            dynamic jsonResponse = JsonConvert.DeserializeObject(responseString);
-        //            return jsonResponse.choices[0].message.content.ToString();
-        //        }
-        //        else
-        //        {
-        //            return $"Error: {response.StatusCode}";
-        //        }
-        //    }
-        //}
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    dynamic jsonResponse = JsonConvert.DeserializeObject(responseString);
+                    return jsonResponse.choices[0].message.content.ToString();
+                }
+                else
+                {
+                    return $"Error: {response.StatusCode}";
+                }
+            }
+        }
 
     }
 }

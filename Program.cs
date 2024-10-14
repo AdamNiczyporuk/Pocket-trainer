@@ -2,13 +2,16 @@
 using System;
 using System.Data;
 using System.Threading.Tasks;
-using CHATAPI; 
+using CHATAPI;
+using Microsoft.Identity.Client;
 class Program
 {
     static async Task Main()
     {
         ChatGPT_diet.SetUpSetting();
-       
+        String Prompt = "Write me a diet plan";
+        var response = await ChatGPT_diet.SendRequestToChatGPT(Prompt);
+        Console.Write(response);
         // API Donloader
         //API api = new API();
 
@@ -37,7 +40,7 @@ class Program
         //    // Wywołanie metody pobierającej dane z API
         //    await api.GetExerciseData(muscle);
         //}
-        StartMenu();
+        //StartMenu();
 
 
 
