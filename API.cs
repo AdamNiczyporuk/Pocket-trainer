@@ -13,7 +13,7 @@ using KCK_Project__Console_Pocket_trainer_.Models;
 using System.Collections.Generic;
 using KCK_Project__Console_Pocket_trainer_.Data;
 
-namespace KCK_Project__Console_Pocket_trainer_.Repositories
+namespace KCK_Project__Console_Pocket_trainer_
 {
     public  class API
     {
