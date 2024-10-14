@@ -8,14 +8,38 @@ class Program
 {
     static async Task Main()
     {
-        API api = new API();
-        string muscle = "biceps";
+        // API Donloader
+        //API api = new API();
 
-        // Wywołanie metody pobierającej dane z API
-         await api.GetExerciseData(muscle);
+        //string[] muscles = new string[]
+        //{
+        //    "abdominals",
+        //    "abductors",
+        //    "adductors",
+        //    "biceps",
+        //    "calves",
+        //    "chest",
+        //    "forearms",
+        //    "glutes",
+        //    "hamstrings",
+        //    "lats",
+        //    "lower_back",
+        //    "middle_back",
+        //    "neck",
+        //    "quadriceps",
+        //    "traps",
+        //    "triceps"
+        //};
 
-       
-       
+        //foreach (String muscle in muscles)
+        //{
+        //    // Wywołanie metody pobierającej dane z API
+        //    await api.GetExerciseData(muscle);
+        //}
+        StartMenu();
+
+
+
     }
     static void Panel()
     {
@@ -49,16 +73,12 @@ class Program
                     break;
                 case "Exit":
                     AnsiConsole.MarkupLine("[red]Program End.[/]");
+                    exit = true;
                     StartMenu();
                     break;
             }
 
-            // Czekaj na naciśnięcie klawisza przed powrotem do menu, jeśli użytkownik nie wybrał wyjścia
-            if (!exit)
-            {
-                AnsiConsole.MarkupLine("[grey]Naciśnij dowolny klawisz, aby wrócić do menu...[/]");
-                Console.ReadKey();
-            }
+            
         }
     }
 
@@ -85,8 +105,8 @@ class Program
             switch (option)
             {
                 case "Log IN":
+                    exit= true;
                     LogIN();
-                    AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 1![/]");
                     break;
                 case "Sign IN":
                     SignIN();
@@ -98,18 +118,13 @@ class Program
                     break;
             }
 
-            // Czekaj na naciśnięcie klawisza przed powrotem do menu, jeśli użytkownik nie wybrał wyjścia
-            if (!exit)
-            {
-                AnsiConsole.MarkupLine("[grey]Naciśnij dowolny klawisz, aby wrócić do menu...[/]");
-                Console.ReadKey();
-            }
+           
         }
     }
     static void SignIN()
     {// Display the login view
 
-  
+
         while (true)
         {
             var mail = AnsiConsole.Ask<string>("Enter your [yellow]E-mail[/]:");
@@ -154,10 +169,10 @@ class Program
                 }
                 Panel();
             }
-            
+
         }
-       
-       
+
+
     }
     static void LogIN()
     {
@@ -206,6 +221,6 @@ class Program
 
 
 
-   
+
 }
 
