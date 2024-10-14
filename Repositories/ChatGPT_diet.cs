@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KCK_Project__Console_Pocket_trainer_.Repositories
+namespace Repositories
 {
     public class ChatGPT_diet
-{
-}
+    {
+    }
 }
