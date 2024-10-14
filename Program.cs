@@ -4,6 +4,7 @@ using System.Data;
 using System.Threading.Tasks;
 using CHATAPI;
 using Microsoft.Identity.Client;
+using System.Threading;
 class Program
 {
     static async Task Main()
@@ -37,23 +38,39 @@ class Program
         //    // Wywołanie metody pobierającej dane z API
         //    await api.GetExerciseData(muscle);
         //}
-        StartMenu();
+         await StartMenu();
 
 
 
     }
+   
+
+ 
+    
+
     static async Task Diet()
     {
         ChatGPT_diet.SetUpSetting();
-        String Prompt = "My weigh=87kg,Height=186cm,TrainingsPerWeek=6trainingPerWeek.Write me a diet plan for 7 seven days";
-        var response = await ChatGPT_diet.SendRequestToChatGPT(Prompt);
-        while (true)
-        {
-            AnsiConsole.MarkupLine(response);
-        }
-        
+        String Prompt = "My weigh=87kg,Height=186cm,TrainingsPerWeek=6trainingPerWeek.Write me a diet plan for 7 seven days.";
+
+     
+
+        var responseTask =  ChatGPT_diet.SendRequestToChatGPT(Prompt);
+
+        Console.CursorVisible = false; 
+        AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
+
+        var response = await responseTask;
+
+        Console.CursorVisible = true;
+        AnsiConsole.Clear();
+        AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
+        AnsiConsole.MarkupLine(response);
+
+       
+  
     }
-    static  void  Panel()
+    static async Task Panel()
     {
         bool exit = false;
         Console.Clear();
@@ -81,7 +98,7 @@ class Program
                     AnsiConsole.MarkupLine("[green]See Data![/]");
                     break;
                 case "Write Diet":
-                    Diet();
+                    await Diet();
                     break;
                 case "Settings":
                     AnsiConsole.MarkupLine("[green]Settings![/]");
@@ -97,7 +114,7 @@ class Program
         }
     }
 
-    static void StartMenu()
+    static async Task  StartMenu()
     {
         Console.Clear();
         bool exit = false;
@@ -121,10 +138,10 @@ class Program
             {
                 case "Log IN":
                     exit= true;
-                    LogIN();
+                    await  LogIN();
                     break;
                 case "Sign IN":
-                    SignIN();
+                   await SignIN();
                     AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 2![/]");
                     break;
                 case "Exit":
@@ -136,7 +153,7 @@ class Program
            
         }
     }
-    static void SignIN()
+    static async Task  SignIN()
     {// Display the login view
 
 
@@ -166,12 +183,12 @@ class Program
                 if (mail == "" || username == "" || password == "")
                 {
                     AnsiConsole.MarkupLine("[red]Invalid username or password![/]");
-                    SignIN();
+                     SignIN();
                 }
                 else if (mail.Contains("@") == false)
                 {
                     AnsiConsole.MarkupLine("[red]Invalid email![/]");
-                    SignIN();
+                     SignIN();
                 }
                 else
                 {
@@ -181,15 +198,16 @@ class Program
                     // Add the user to the database
                     // AddUserToDatabase(mail, username, password);
                     AnsiConsole.MarkupLine("[green]User added successfully![/]");
+                    await Panel();
                 }
-                Panel();
+                
             }
 
         }
 
 
     }
-    static void LogIN()
+    static async Task LogIN()
     {
         while (true)
         {
@@ -216,7 +234,7 @@ class Program
             // Symulacja walidacji logowania (możesz zastąpić to własną logiką)
             if (ValidateLogin(username, password))
             {
-                Panel();
+                await Panel();
                 break;
 
             }
