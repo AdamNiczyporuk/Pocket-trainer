@@ -6,9 +6,13 @@ using CHATAPI;
 using Microsoft.Identity.Client;
 using System.Threading;
 using KCK_Project__Console_Pocket_trainer_.Interfaces;
+
+using KCK_Project__Console_Pocket_trainer_.Models;
+using KCK_Project__Console_Pocket_trainer_.Data;
+using System.Collections.Generic;
 class Program
 {
-    static async Task Main()
+    static void  Main()
     {
 
         // API Donloader
@@ -41,7 +45,23 @@ class Program
         //}
         //await StartMenu();
 
-        IUserRepository userRepository = new UserRepository();
+      
+
+        User newUser = new User
+        {
+            UserName = "admin",
+            Password = "admin",
+            Weight = 87,
+            Height = 186,
+            TrainingsPerWeek = 6
+        };
+        using (var context = new ApplicationDbContext())
+        {
+            context.Users.Add(newUser);
+            context.SaveChanges(); 
+        }
+
+
 
 
     }
