@@ -11,7 +11,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Interfaces
 {
         bool Add(User user);
         bool Delete(User user);
-        bool Update(Exercise user);
+        bool Update(User user);
         User GetUserByUserName(string userName);
         User GetUserById(int id);
         bool Save();
