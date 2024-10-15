@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using CHATAPI;
 using Microsoft.Identity.Client;
 using System.Threading;
+using KCK_Project__Console_Pocket_trainer_.Interfaces;
 class Program
 {
     static async Task Main()
     {
-        
+
         // API Donloader
         //API api = new API();
 
@@ -38,8 +39,9 @@ class Program
         //    // Wywołanie metody pobierającej dane z API
         //    await api.GetExerciseData(muscle);
         //}
-         await StartMenu();
+        //await StartMenu();
 
+        IUserRepository userRepository = new UserRepository();
 
 
     }
