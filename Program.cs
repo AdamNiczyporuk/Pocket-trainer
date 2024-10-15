@@ -9,9 +9,10 @@ using KCK_Project__Console_Pocket_trainer_.Interfaces;
 
 using KCK_Project__Console_Pocket_trainer_.Models;
 using KCK_Project__Console_Pocket_trainer_.Data;
+using System.Collections.Generic;
 class Program
 {
-    static async Task Main()
+    static void  Main()
     {
 
         // API Donloader
@@ -48,7 +49,6 @@ class Program
 
         User newUser = new User
         {
-            Id = 1,
             UserName = "admin",
             Password = "admin",
             Weight = 87,
@@ -58,7 +58,7 @@ class Program
         using (var context = new ApplicationDbContext())
         {
             context.Users.Add(newUser);
-            await context.SaveChangesAsync(); 
+            context.SaveChanges(); 
         }
 
 
