@@ -6,6 +6,8 @@ using CHATAPI;
 using Microsoft.Identity.Client;
 using System.Threading;
 using KCK_Project__Console_Pocket_trainer_.Interfaces;
+using KCK_Project__Console_Pocket_trainer_.Repositories;
+using KCK_Project__Console_Pocket_trainer_.Models;
 class Program
 {
     static async Task Main()
@@ -42,6 +44,17 @@ class Program
         //await StartMenu();
 
         IUserRepository userRepository = new UserRepository();
+
+        User newUser = new User
+        {
+            Id = 1,
+            UserName = "admin",
+            Password = "admin",
+            Weight = 87,
+            Height = 186,
+            TrainingsPerWeek = 6
+        };
+
 
 
     }

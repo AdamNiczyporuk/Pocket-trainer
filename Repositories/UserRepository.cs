@@ -41,15 +41,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
 
         public bool Update(Exercise user)
         {
-            var existingUser = GetUserById(user.Id);
-            if (existingUser != null)
-            {
-                existingUser.UserName = user.UserName;
-                existingUser.UserName = user.UserName;
-                // Aktualizuj inne właściwości
-                return true;
-            }
-            return false;
+           return true;
         }
     }
 }
