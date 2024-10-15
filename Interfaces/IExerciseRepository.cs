@@ -1,4 +1,5 @@
 ﻿using KCK_Project__Console_Pocket_trainer_.Models;
+using KCK_Project__Console_Pocket_trainer_.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Interfaces
         bool Update(Exercise exercise);
         bool Save();
         Exercise GetExerciseById(int id);
-        List<Exercise> GetUserExercises(int userId);
         List<Exercise> GetExercisesByMuscle(string muscle);
         List<Exercise> GetExercisesByName(string name);
-        List<Exercise> GetExercisesByTrainingPlan(string type);
+        List<ExerciseWithSets> GetExercisesByTrainingPlan(int trainingPlanId);
 
     }
 }

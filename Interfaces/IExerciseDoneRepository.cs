@@ -1,4 +1,5 @@
 ﻿using KCK_Project__Console_Pocket_trainer_.Models;
+using KCK_Project__Console_Pocket_trainer_.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Interfaces
         bool Update(ExerciseDone exerciseDone);
         bool Save();
         ExerciseDone GetExerciseDoneById(int id);
-        List<ExerciseDone> GetExercisesDoneByUser(int userId, int exerciseId);
-        List<ExerciseDone> GetExercisesDoneByTraining(int trainingId);
+        List<ExerciseWithSets> GetExercisesDoneByUser(int userId, int exerciseId);
+        List<ExerciseWithSets> GetExercisesDoneByTraining(int trainingId);
         
 
 

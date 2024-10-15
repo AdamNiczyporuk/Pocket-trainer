@@ -14,7 +14,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Interfaces
         bool Update(TrainingPlan trainingPlan);
         bool Save();
         TrainingPlan GetTrainingPlanById(int id);
-        IEnumerable<TrainingPlan> GetUserTrainingPlans(int userId);
+        List<TrainingPlan> GetUserTrainingPlans(int userId);
 
     }
 

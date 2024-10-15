@@ -13,6 +13,6 @@ namespace KCK_Project__Console_Pocket_trainer_.Interfaces
         bool Delete(ExerciseToTrainingPlan exercise);
         bool Update(ExerciseToTrainingPlan exercise);
         bool Save();
-        ExerciseToTrainingPlan GetExercisesByTrainingPlan(int trainingPlanId, int exerciseId);
+        
     }
 }
