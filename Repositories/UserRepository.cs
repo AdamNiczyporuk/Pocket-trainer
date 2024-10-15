@@ -10,34 +10,46 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private List<User> users = new List<User>();
+
         public bool Add(User user)
         {
-            throw new NotImplementedException();
+            users.Add(user);
+            return true;
         }
 
         public bool Delete(User user)
         {
-            throw new NotImplementedException();
+            return users.Remove(user);
         }
 
         public User GetUserById(int id)
         {
-            throw new NotImplementedException();
+            return users.FirstOrDefault(u => u.Id == id);
         }
 
         public User GetUserByUserName(string userName)
         {
-            throw new NotImplementedException();
+            return users.FirstOrDefault(u => u.UserName == userName);
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            // Implementacja zapisu do bazy danych lub innego źródła danych
+            return true;
         }
 
         public bool Update(Exercise user)
         {
-            throw new NotImplementedException();
+            var existingUser = GetUserById(user.Id);
+            if (existingUser != null)
+            {
+                existingUser.UserName = user.UserName;
+                existingUser.UserName = user.UserName;
+                // Aktualizuj inne właściwości
+                return true;
+            }
+            return false;
         }
     }
 }
