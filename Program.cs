@@ -6,8 +6,9 @@ using CHATAPI;
 using Microsoft.Identity.Client;
 using System.Threading;
 using KCK_Project__Console_Pocket_trainer_.Interfaces;
-using KCK_Project__Console_Pocket_trainer_.Repositories;
+
 using KCK_Project__Console_Pocket_trainer_.Models;
+using KCK_Project__Console_Pocket_trainer_.Data;
 class Program
 {
     static async Task Main()
@@ -43,7 +44,7 @@ class Program
         //}
         //await StartMenu();
 
-        IUserRepository userRepository = new UserRepository();
+      
 
         User newUser = new User
         {
@@ -54,6 +55,12 @@ class Program
             Height = 186,
             TrainingsPerWeek = 6
         };
+        using (var context = new ApplicationDbContext())
+        {
+            context.Users.Add(newUser);
+            await context.SaveChangesAsync(); 
+        }
+
 
 
 
