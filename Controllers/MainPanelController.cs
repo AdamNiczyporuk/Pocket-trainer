@@ -29,8 +29,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 // Obsługa wsybranej opcji
                 switch (option)
                 {
-                    case "Add Training":
-                        AnsiConsole.MarkupLine("[green]Add Training![/]");
+                    case "Trainings":
+                        var trainingController = new TrainingController();
+                        await trainingController.Run();
                         break;
                     case "See Data":
                         AnsiConsole.MarkupLine("[green]See Data![/]");
