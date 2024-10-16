@@ -48,20 +48,6 @@ class Program
 
       
 
-        User newUser = new User
-        {
-            UserName = "admin",
-            Password = "admin",
-            Weight = 87,
-            Height = 186,
-            TrainingsPerWeek = 6
-        };
-        using (var context = new ApplicationDbContext())
-        {
-            context.Users.Add(newUser);
-            context.SaveChanges(); 
-        }
-
 
 
 

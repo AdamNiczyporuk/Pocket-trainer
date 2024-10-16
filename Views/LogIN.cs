@@ -38,7 +38,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                 if (option == "Exit")
                 {
                     AnsiConsole.MarkupLine("[red]Exiting the application...[/]");
-                    await StartMenu.Execute();
+                     await StartMenu.Execute();
                     break; // Wyjście z pętli i zakończenie aplikacji
                 }
                 if (option == "Login")

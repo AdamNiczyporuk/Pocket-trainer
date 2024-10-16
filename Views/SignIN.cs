@@ -68,13 +68,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         await Panel.Execute();
                         break;
                     }
-                    else
-                    {
-
-                        AnsiConsole.MarkupLine("[red]User already exists![/]");
-                        await SignIN.Execute();
-
-                    }
+                   
 
                 }
 
