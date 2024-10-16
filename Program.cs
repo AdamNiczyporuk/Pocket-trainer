@@ -92,7 +92,7 @@ class Program
        
   
     }
-    static async Task Panel()
+    public static async Task Panel()
     {
         bool exit = false;
         Console.Clear();
