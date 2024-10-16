@@ -37,7 +37,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         AnsiConsole.MarkupLine("[green]See Data![/]");
                         break;
                     case "Write Diet":
-                        await Diet();
+                        await Diet.Execute();
                         break;
                     case "Settings":
                         AnsiConsole.MarkupLine("[green]Settings![/]");
@@ -45,7 +45,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     case "Exit":
                         AnsiConsole.MarkupLine("[red]Program End.[/]");
                         exit = true;
-                        StartMenu();
+                        await StartMenu.Execute();
                         break;
                 }
 

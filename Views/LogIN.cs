@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace KCK_Project__Console.Views
+namespace KCK_Project__Console_Pocket_trainer_.Views
 {
     public class LogIN
     {
@@ -37,7 +37,7 @@ namespace KCK_Project__Console.Views
                 // Symulacja walidacji logowania (możesz zastąpić to własną logiką)
                 if (ValidateLogin(username, password))
                 {
-                    await Program.Panel();
+                    await Panel.Execute();
                     break;
                 }
                 else

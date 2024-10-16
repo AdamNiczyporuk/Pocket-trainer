@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KCK_Project__Console_Pocket_trainer_.Views;
 
-namespace KCK_Project__Console.Views
+namespace KCK_Project__Console_Pocket_trainer_.Views
 {
     public class SignIN
     {
@@ -37,12 +38,12 @@ namespace KCK_Project__Console.Views
                     if (mail == "" || username == "" || password == "")
                     {
                         AnsiConsole.MarkupLine("[red]Invalid username or password![/]");
-                        SignIN();
+                        await SignIN.Execute();
                     }
                     else if (mail.Contains("@") == false)
                     {
                         AnsiConsole.MarkupLine("[red]Invalid email![/]");
-                        SignIN();
+                        await SignIN.Execute();
                     }
                     else
                     {
@@ -52,7 +53,7 @@ namespace KCK_Project__Console.Views
                         // Add the user to the database
                         // AddUserToDatabase(mail, username, password);
                         AnsiConsole.MarkupLine("[green]User added successfully![/]");
-                        await Program.Panel();
+                        await Panel.Execute();
                     }
 
                 }

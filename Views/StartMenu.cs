@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KCK_Project__Console_Pocket_trainer_.Views;
+
 
 namespace KCK_Project__Console_Pocket_trainer_.Views
 {
@@ -34,10 +36,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                 {
                     case "Log IN":
                         exit = true;
-                        await LogIN();
+                        await LogIN.Execute();
                         break;
                     case "Sign IN":
-                        await SignIN();
+                        await SignIN.Execute();
                         AnsiConsole.MarkupLine("[green]Wybrałeś Opcję 2![/]");
                         break;
                     case "Exit":
