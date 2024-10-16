@@ -17,6 +17,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Data
         public DbSet<ExerciseToTrainingPlan> ExercisesToTrainingPlans { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<ExerciseDone> ExercisesDone { get; set; }
+        public DbSet<Diet> Diets { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
