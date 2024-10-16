@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KCK_Project__Console_Pocket_trainer_.Views
@@ -17,10 +18,14 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                        .PageSize(10)
                        .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
                        .AddChoices(new[] {
-                        "Add Training", "See Data", "Write Diet","Settings" ,"Exit"
+                        "Trainings", "Diet","Settings" ,"Exit"
                        })
                        .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
             return option;
+        }
+        public static void Wait()
+        {
+            Thread.Sleep(1000);
         }
 }
 }

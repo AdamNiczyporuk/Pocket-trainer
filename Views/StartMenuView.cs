@@ -13,7 +13,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         {
             var option = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
-                        .Title("[yellow]Wybierz opcję:[/]")
+                        .Title("[yellow]Choose option:[/]")
                         .PageSize(10)
                         .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
                         .AddChoices(new[] {
@@ -28,7 +28,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         }
         public static string GetUsername()
         {
-            AnsiConsole.MarkupLine("To Log IN Enter username and password");
+            AnsiConsole.MarkupLine("Login Panel");
             var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
             return username;
         }

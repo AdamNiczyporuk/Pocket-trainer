@@ -24,6 +24,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             var exit= false;
             while (!exit)
             {
+                Console.Clear();
                 var option = Views.MainPanelView.GetOption();
                 // Obsługa wsybranej opcji
                 switch (option)
@@ -42,8 +43,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         break;
                     case "Exit":
                         AnsiConsole.MarkupLine("[red]Program End.[/]");
+                        MainPanelView.Wait();
                         exit = true;
-                        await StartMenu.Execute();
                         break;
                 }
             }
