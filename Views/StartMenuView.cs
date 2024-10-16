@@ -48,7 +48,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         .PageSize(10)
                         .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
                         .AddChoices(new[] {
-                        "Yes",  "No(Exit)"
+                        "Yes",  "No"
                         })
                         .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
             return option;

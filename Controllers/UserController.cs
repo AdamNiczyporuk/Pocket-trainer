@@ -16,19 +16,24 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         }
         public async Task Run()
         {
-            var option = StartMenuView.GetOption();
-            switch (option)
+            while (Program.user == null)
             {
-                case "Login":
-                    await Login();
-                    break;
-                case "Sign in":
-                    await SignIn();
-                    break;
-                case "Exit":
-                    StartMenuView.ShowMessage("[red]Exiting the application...[/]");
-                    Environment.Exit(0);
-                    break;
+                Console.Clear();
+
+                var option = StartMenuView.GetOption();
+                switch (option)
+                {
+                    case "Login":
+                        await Login();
+                        break;
+                    case "Sign in":
+                        await SignIn();
+                        break;
+                    case "Exit":
+                        StartMenuView.ShowMessage("[red]Exiting the application...[/]");
+                        Environment.Exit(0);
+                        break;
+                }
             }
         }
         public async Task Login()
@@ -69,10 +74,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
                     }
                     var option = StartMenuView.DoYouWantToTryAgain();
-                    if (option == "No(Exit)")
+                    if (option == "No")
                     {
-                        StartMenuView.ShowMessage("[red]Exiting the application...[/]");
-                        Environment.Exit(0);
+                        StartMenuView.ShowMessage("[red]Returning to Start Menu...[/]");
+                        return;
                     }
 
                 }
