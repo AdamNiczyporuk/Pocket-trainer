@@ -1,0 +1,58 @@
+﻿using Spectre.Console;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KCK_Project__Console_Pocket_trainer_.Views
+{
+    public class StartMenuView
+    {
+        public static string GetOption()
+        {
+            var option = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[yellow]Wybierz opcję:[/]")
+                        .PageSize(10)
+                        .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
+                        .AddChoices(new[] {
+                        "Login", "Sign in", "Exit"
+                        })
+                        .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
+            return option;
+        }
+        public static void ShowMessage(string message)
+        {
+            AnsiConsole.MarkupLine(message);
+        }
+        public static string GetUsername()
+        {
+            AnsiConsole.MarkupLine("To Log IN Enter username and password");
+            var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
+            return username;
+        }
+        public static string GetPassword()
+        {
+            var password = AnsiConsole.Prompt(
+                new TextPrompt<string>("Enter your [yellow]Password[/]:")
+                    .PromptStyle("red")
+                    .Secret());
+            return password;
+        }
+        public static string DoYouWantToTryAgain()
+        {
+            var option = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[yellow]Do you want to try again?:[/]")
+                        .PageSize(10)
+                        .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
+                        .AddChoices(new[] {
+                        "Yes",  "No(Exit)"
+                        })
+                        .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
+            return option;
+        }
+    }
+}
+
