@@ -18,11 +18,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 
             var context = new ApplicationDbContext();
             var userRepository = new UserRepository(context);
-            Console.Clear();
             while (true)
             {
                 // Wyświetlenie opcji logowania
-                AnsiConsole.MarkupLine("To LogIn enter username and password");
+                AnsiConsole.MarkupLine("To Log IN Enter username and password");
                 var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
                 var password = AnsiConsole.Prompt(
                     new TextPrompt<string>("Enter your [yellow]Password[/]:")
@@ -59,7 +58,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         }
                         else
                         {
-                            AnsiConsole.MarkupLine("[red]Invalid username or password![/]");
+                            AnsiConsole.MarkupLine("[red]Invalid password!Try Again!![/]");
                             await LogIN.Execute();
                         }
                     }
