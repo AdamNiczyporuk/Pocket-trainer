@@ -52,18 +52,13 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         await LogIN.Execute();
                         break;
                     }
-                    else if (existingUser != null)
+                    else if (existingUser == null)
                     {
                         // Check if the user already exists
                         // Seraching user thorugh Mail a
                         //Validate password and Username
                         // Add the user to the database
                         // AddUserToDatabase(mail, username, password);
-                        AnsiConsole.MarkupLine("[red]User already exists![/]");
-                        await SignIN.Execute();
-                    }
-                    else
-                    {
                         var newUser = new User
                         {
                             UserName = username,
@@ -72,7 +67,12 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         userRepository.Add(newUser);
                         await Panel.Execute();
                         break;
+                    }
+                    else
+                    {
 
+                        AnsiConsole.MarkupLine("[red]User already exists![/]");
+                        await SignIN.Execute();
 
                     }
 
