@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KCK_Project__Console_Pocket_trainer_.Views;
+using KCK_Project__Console_Pocket_trainer_.Models;
 
 namespace KCK_Project__Console_Pocket_trainer_.Views
 {
@@ -14,7 +16,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         {
 
             ChatGPT_diet.SetUpSetting();
-            String Prompt = "My weigh=87kg,Height=186cm,TrainingsPerWeek=6trainingPerWeek.Write me a diet plan for 7 seven days.";
+            String Prompt = ($"My weigh={Program.user.Weight},Height={Program.user.Height},TrainingsPerWeek={Program.user.TrainingsPerWeek}.Write me a diet plan for 7 seven days.");
 
 
 
