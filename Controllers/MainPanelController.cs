@@ -36,7 +36,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     case "See Data":
                         AnsiConsole.MarkupLine("[green]See Data![/]");
                         break;
-                    case "Write Diet":
+                    case "Diet":
                         await Diet.Execute();
                         break;
                     case "Settings":
