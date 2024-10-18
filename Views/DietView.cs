@@ -18,6 +18,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
     {
         private static async Task GenerateDiet(DietRepository dietRepository)
         {
+            Console.Clear();
             ChatGPT_diet.SetUpSetting();
             string prompt = ($"My weigh={Program.user.Weight},Height={Program.user.Height},TrainingsPerWeek={Program.user.TrainingsPerWeek}.Write me a diet plan for 7 seven days.");
 
@@ -82,6 +83,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         if (option == "Generate Again")
                         {
                             await GenerateDiet(dietRepository);
+                            exit = true;
                         }
                         else if (option == "Exit")
                         {
