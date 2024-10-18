@@ -53,6 +53,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
             return option;
         }
+        public static void Greet()
+        {
+            AnsiConsole.MarkupLine($"[green]Hello user! To use Pocket Trainer first you need to login.[/]");
+        }
     }
 }
 

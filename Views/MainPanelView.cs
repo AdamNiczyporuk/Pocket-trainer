@@ -14,7 +14,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         {
             var option = AnsiConsole.Prompt(
                    new SelectionPrompt<string>()
-                       .Title("[yellow]Wybierz opcję:[/]")
+                       .Title("[yellow]Choose option:[/]")
                        .PageSize(10)
                        .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
                        .AddChoices(new[] {
@@ -27,5 +27,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         {
             Thread.Sleep(1000);
         }
-}
+        public static void Greet(string username)
+        {
+            AnsiConsole.MarkupLine($"[yellow]Welcome to Pocket Trainer, {username}![/]");
+        }
+    }
 }

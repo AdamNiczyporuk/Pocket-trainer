@@ -21,7 +21,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             while (Program.user == null)
             {
                 Console.Clear();
-
+                StartMenuView.Greet();
                 var option = StartMenuView.GetOption();
                 switch (option)
                 {
