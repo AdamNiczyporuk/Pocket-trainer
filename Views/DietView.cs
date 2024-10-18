@@ -53,7 +53,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                         {
                             Text = response,
                             UserId = Program.user.Id,
-                            User = Program.user
+                            
                         };
 
                         dietRepository.Add(diet);
