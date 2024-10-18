@@ -16,72 +16,87 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 {
     public class DietView
     {
+        private static async Task GenerateDiet(DietRepository dietRepository)
+        {
+            ChatGPT_diet.SetUpSetting();
+            string prompt = ($"My weigh={Program.user.Weight},Height={Program.user.Height},TrainingsPerWeek={Program.user.TrainingsPerWeek}.Write me a diet plan for 7 seven days.");
+
+            var responseTask = ChatGPT_diet.SendRequestToChatGPT(prompt);
+
+            Console.CursorVisible = false;
+            AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
+
+            var response = await responseTask;
+
+            Console.CursorVisible = true;
+            AnsiConsole.Clear();
+            AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
+            AnsiConsole.MarkupLine(response);
+
+            var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
+                .AddChoices(new[] { "Save Diet", "Generate Again", "Exit" })
+                .HighlightStyle(new Style(foreground: Color.Aqua)));
+
+            if (option == "Save Diet")
+            {
+                Diet diet = new Diet()
+                {
+                    Text = response,
+                    UserId = Program.user.Id,
+                };
+
+                dietRepository.Add(diet);
+                AnsiConsole.MarkupLine("[bold green]Diet saved successfully![/]");
+            }
+            else if (option == "Generate Again")
+            {
+                 GenerateDiet(dietRepository);
+            }
+            else if (option == "Exit")
+            {
+                AnsiConsole.MarkupLine("[red]Exiting without saving the diet plan...[/]");
+            }
+        }
+
         public static async Task Execute()
         {
+
             using (var context = new ApplicationDbContext())
             {
                 var dietRepository = new DietRepository(context);
-                var exisitingDiet = dietRepository.GetUserDiets(Program.user.Id);
-                if(exisitingDiet.Any())
-                {
-                    AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
-                    AnsiConsole.MarkupLine(exisitingDiet[0].Text);
-                    Console.ReadKey();
-                }
-                else
-                {
+                var existingDiet = dietRepository.GetUserDiets(Program.user.Id);
 
-                    while (true)
+                bool exit = false;
+
+                while (!exit)
+                {
+                    if (existingDiet.Any())
                     {
-                        ChatGPT_diet.SetUpSetting();
-                        string Prompt = ($"My weigh={Program.user.Weight},Height={Program.user.Height},TrainingsPerWeek={Program.user.TrainingsPerWeek}.Write me a diet plan for 7 seven days.");
-
-                        var responseTask = ChatGPT_diet.SendRequestToChatGPT(Prompt);
-
-                        Console.CursorVisible = false;
-                        AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
-
-                        var response = await responseTask;
-
-                        Console.CursorVisible = true;
-                        AnsiConsole.Clear();
-                        AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
-                        AnsiConsole.MarkupLine(response);
+                        AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
+                        AnsiConsole.MarkupLine(existingDiet[0].Text);
 
                         var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
-                            .AddChoices(new[] { "Save Diet", "Generate Again", "Exit" })
+                            .AddChoices(new[] { "Generate Again", "Exit" })
                             .HighlightStyle(new Style(foreground: Color.Aqua)));
-                        if (option == "Save Diet")
-                        {
-                            Diet diet = new Diet()
-                            {
-                                Text = response,
-                                UserId = Program.user.Id,
 
-                            };
-
-                            dietRepository.Add(diet);
-                            AnsiConsole.MarkupLine("[bold green]Diet saved successfully![/]");
-                            break;
-                        }
-                        else if (option == "Generate Again")
+                        if (option == "Generate Again")
                         {
-                            continue;
+                            await GenerateDiet(dietRepository);
                         }
                         else if (option == "Exit")
                         {
                             AnsiConsole.MarkupLine("[red]Exiting without saving the diet plan...[/]");
-                            break;
+                            exit = true;
                         }
-
-
+                    }
+                    else
+                    {
+                        GenerateDiet(dietRepository);
                     }
                 }
-               
-
-
             }
+        
 
-        }
+    }
     }
 }
