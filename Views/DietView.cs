@@ -27,31 +27,63 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
                     AnsiConsole.MarkupLine(exisitingDiet[0].Text);
                 }
-                
-
-
-                ChatGPT_diet.SetUpSetting();
-                String Prompt = ($"My weigh={Program.user.Weight},Height={Program.user.Height},TrainingsPerWeek={Program.user.TrainingsPerWeek}.Write me a diet plan for 7 seven days.");
-
-
-
-                var responseTask = ChatGPT_diet.SendRequestToChatGPT(Prompt);
-
-                Console.CursorVisible = false;
-                AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
-
-                var response = await responseTask;
-
-                Console.CursorVisible = true;
-                AnsiConsole.Clear();
-                AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
-                AnsiConsole.MarkupLine(response);
-                Diet diet = new Diet()
+                while (true)
                 {
-                    Text = response,
-                    UserId = Program.user.Id,
-                    User = Program.user
-                };
+                    ChatGPT_diet.SetUpSetting();
+                    string Prompt = ($"My weigh={Program.user.Weight},Height={Program.user.Height},TrainingsPerWeek={Program.user.TrainingsPerWeek}.Write me a diet plan for 7 seven days.");
+
+                    var responseTask = ChatGPT_diet.SendRequestToChatGPT(Prompt);
+
+                    Console.CursorVisible = false;
+                    AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
+
+                    var response = await responseTask;
+
+                    Console.CursorVisible = true;
+                    AnsiConsole.Clear();
+                    AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
+                    AnsiConsole.MarkupLine(response);
+
+                    var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
+                        .AddChoices(new[] { "Save Diet", "Generate Again", "Exit" })
+                        .HighlightStyle(new Style(foreground: Color.Aqua)));
+                    if(option == "Save Diet")
+                    {
+                        Diet diet = new Diet()
+                        {
+                            Text = response,
+                            UserId = Program.user.Id,
+                            User = Program.user
+                        };
+
+                        dietRepository.Add(diet);
+                        AnsiConsole.MarkupLine("[bold green]Diet saved successfully![/]");
+                        break;
+                    }
+                    else if(option == "Generate Again")
+                    {
+                        continue;
+                    }
+                    else if(option == "Exit")
+                    {
+                        AnsiConsole.MarkupLine("[red]Exiting without saving the diet plan...[/]");
+                        break;
+                    }
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+               
                 Console.ReadKey();
 
             }
