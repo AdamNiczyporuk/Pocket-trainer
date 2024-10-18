@@ -21,6 +21,15 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             using (var context = new ApplicationDbContext())
             {
                 var dietRepository = new DietRepository(context);
+                var exisitingDiet = dietRepository.GetUserDiets(Program.user.Id);
+                if(exisitingDiet.Any())
+                {
+                    AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
+                    AnsiConsole.MarkupLine(exisitingDiet[0].Text);
+                }
+                
+
+
                 ChatGPT_diet.SetUpSetting();
                 String Prompt = ($"My weigh={Program.user.Weight},Height={Program.user.Height},TrainingsPerWeek={Program.user.TrainingsPerWeek}.Write me a diet plan for 7 seven days.");
 
