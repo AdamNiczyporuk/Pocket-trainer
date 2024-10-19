@@ -51,7 +51,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             }
             else if (option == "Generate Again")
             {
-                 GenerateDiet(dietRepository);
+                GenerateDiet(dietRepository);
             }
             else if (option == "Exit")
             {
@@ -97,8 +97,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     }
                 }
             }
-        
 
-    }
+
+        }
     }
 }
