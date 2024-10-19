@@ -38,7 +38,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         AnsiConsole.MarkupLine("[green]See Data![/]");
                         break;
                     case "Diet":
-                        await DietView.Execute();
+                        var DietView = new DietViewController();
+                        await DietViewController.Execute();
                         break;
                     case "Settings":
                         var settingsController = new SettingsController();
