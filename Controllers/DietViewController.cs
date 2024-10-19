@@ -39,10 +39,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
             AnsiConsole.MarkupLine(response);
 
-            var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
-                .AddChoices(new[] { "Save Diet", "Generate Again", "Exit" })
-                .HighlightStyle(new Style(foreground: Color.Aqua)));
-
+            //var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
+            //    .AddChoices(new[] { "Save Diet", "Generate Again", "Exit" })
+            //    .HighlightStyle(new Style(foreground: Color.Aqua)));
+            var option = Views.DietView1.GetOptionDietExist();
             if (option == "Save Diet")
             {
                 Diet diet = new Diet()
@@ -65,7 +65,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         }
         public static async Task Execute()
         {
-
+            if (Program.user == null)
+            {
+                var userController = new UserController();
+                await userController.Run();
+            }
             using (var context = new ApplicationDbContext())
             {
                 var dietRepository = new DietRepository(context);
@@ -80,9 +84,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
                         AnsiConsole.MarkupLine(existingDiet[0].Text);
 
-                        var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
-                            .AddChoices(new[] { "Generate Again", "Exit" })
-                            .HighlightStyle(new Style(foreground: Color.Aqua)));
+                        var option = Views.DietView1.GetOptionDietExist();
+
+                        //var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
+                        //    .AddChoices(new[] { "Generate Again", "Exit" })
+                        //    .HighlightStyle(new Style(foreground: Color.Aqua)));
 
                         if (option == "Generate Again")
                         {
