@@ -10,10 +10,14 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 {
     public class SettingsView
     {
-        
-        public static void AddData()
+       
+        public string UpdateData()
         {
-
+            return "franek";
+        }
+        public   string AddData()
+        {
+            return "marek";
         }
         public static void ShowUserSettings(User user)
         {
