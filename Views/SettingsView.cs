@@ -10,7 +10,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 {
     public class SettingsView
     {
-     
+
         public static string UpdateDataView()
         {
             var option = AnsiConsole.Prompt(
@@ -24,7 +24,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                       .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
             return option;
         }
-        public  static string AddDataView()
+        public static string AddDataView()
         {
             var option = AnsiConsole.Prompt(
                               new SelectionPrompt<string>()
@@ -37,9 +37,22 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                                   .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
             return option;
         }
-        public static string AddingData()
+        public static string GetHeight()
         {
-
+            AnsiConsole.MarkupLine("Login Panel");
+            var height = AnsiConsole.Ask<string>("Enter your [yellow]Height[/]:");
+            return height;
+        }
+        public static string GetWeight()
+        {
+            AnsiConsole.MarkupLine("Login Panel");
+            var weight = AnsiConsole.Ask<string>("Enter your [yellow]Weight[/]:");
+            return weight;
+        } public static string GetTrainings()
+        {
+            AnsiConsole.MarkupLine("Login Panel");
+            var trainings = AnsiConsole.Ask<string>("Enter your [yellow]how often do you train per week? [/]:");
+            return trainings;
         }
         public static void ShowUserSettings(User user)
         {
@@ -49,7 +62,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             table.AddColumn("[blue]Value[/]");
             table.AddRow("Username", user.UserName);
             string password = "";
-            for(int i = 0; i < user.Password.Length; i++)
+            for (int i = 0; i < user.Password.Length; i++)
             {
                 password += "*";
             }

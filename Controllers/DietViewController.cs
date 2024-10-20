@@ -11,6 +11,7 @@ using KCK_Project__Console_Pocket_trainer_.Interfaces;
 using KCK_Project__Console_Pocket_trainer_.Repositories;
 using Microsoft.EntityFrameworkCore;
 using KCK_Project__Console_Pocket_trainer_.Data;
+using Azure;
 
 
 namespace KCK_Project__Console_Pocket_trainer_.Controllers
@@ -21,7 +22,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         {
 
         }
-        private static async Task GenerateDiet(DietRepository dietRepository)
+        private static async Task<String> GenerateDiet(DietRepository dietRepository)
         {
             Console.Clear();
             ChatGPT_diet.SetUpSetting();
@@ -42,26 +43,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             //var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
             //    .AddChoices(new[] { "Save Diet", "Generate Again", "Exit" })
             //    .HighlightStyle(new Style(foreground: Color.Aqua)));
-            var option = Views.DietView1.GetOptionDietExist();
-            if (option == "Save Diet")
-            {
-                Diet diet = new Diet()
-                {
-                    Text = response,
-                    UserId = Program.user.Id,
-                };
-
-                dietRepository.Add(diet);
-                AnsiConsole.MarkupLine("[bold green]Diet saved successfully![/]");
-            }
-            else if (option == "Generate Again")
-            {
-                GenerateDiet(dietRepository);
-            }
-            else if (option == "Exit")
-            {
-                AnsiConsole.MarkupLine("[red]Exiting without saving the diet plan...[/]");
-            }
+            return response;
         }
         public static async Task Execute()
         {
@@ -78,13 +60,13 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 bool exit = false;
 
                 while (!exit)
-                {
+                { //There is a need to Add checker if user has data to generate diet
                     if (existingDiet.Any())
                     {
                         AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
                         AnsiConsole.MarkupLine(existingDiet[0].Text);
 
-                        var option = Views.DietView1.GetOptionDietExist();
+                        var option = Views.DietView.GetOptionDietExist();
 
                         //var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
                         //    .AddChoices(new[] { "Generate Again", "Exit" })
@@ -103,7 +85,29 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     }
                     else
                     {
-                        GenerateDiet(dietRepository);
+                        var response = await GenerateDiet(dietRepository);
+                        var option = Views.DietView.GetOptionDietNotExist();
+                        if (option == "Save Diet")
+                        {
+                            Diet diet = new Diet()
+                            {
+                                Text = response,
+                                UserId = Program.user.Id,
+                            };
+
+                            dietRepository.Add(diet);
+                            AnsiConsole.MarkupLine("[bold green]Diet saved successfully![/]");
+                        }
+                        else if (option == "Generate Again")
+                        {
+                            await GenerateDiet(dietRepository);
+                        }
+                        else if (option == "Exit")
+                        {
+                            AnsiConsole.MarkupLine("[red]Exiting without saving the diet plan...[/]");
+                            exit = true;
+                        }
+
                     }
                 }
             }

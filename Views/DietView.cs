@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KCK_Project__Console_Pocket_trainer_.Views
 {
-    public class DietView1
+    public class DietView
     {
         public static string GetOptionDietNotExist()
         {
