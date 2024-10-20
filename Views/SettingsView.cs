@@ -10,6 +10,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 {
     public class SettingsView
     {
+        
+        public static void AddData()
+        {
+
+        }
         public static void ShowUserSettings(User user)
         {
 
