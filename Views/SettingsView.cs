@@ -13,7 +13,16 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
        
         public string UpdateData()
         {
-            return "franek";
+            var option = AnsiConsole.Prompt(
+                  new SelectionPrompt<string>()
+                      .Title("[yellow]Choose option:[/]")
+                      .PageSize(10)
+                      .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
+                      .AddChoices(new[] {
+                        "Update Account Data " ,"Exit"
+                      })
+                      .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
+            return option;
         }
         public   string AddData()
         {
