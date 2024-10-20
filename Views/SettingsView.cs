@@ -10,8 +10,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 {
     public class SettingsView
     {
-       
-        public string UpdateData()
+     
+        public static string UpdateDataView()
         {
             var option = AnsiConsole.Prompt(
                   new SelectionPrompt<string>()
@@ -19,14 +19,27 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                       .PageSize(10)
                       .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
                       .AddChoices(new[] {
-                        "Update Account Data " ,"Exit"
+                        "Update Account Data" ,"Exit"
                       })
                       .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
             return option;
         }
-        public   string AddData()
+        public  static string AddDataView()
         {
-            return "marek";
+            var option = AnsiConsole.Prompt(
+                              new SelectionPrompt<string>()
+                                  .Title("[yellow]Choose option:[/]")
+                                  .PageSize(10)
+                                  .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
+                                  .AddChoices(new[] {
+                        "Add Account Data" ,"Exit"
+                                  })
+                                  .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
+            return option;
+        }
+        public static string AddingData()
+        {
+
         }
         public static void ShowUserSettings(User user)
         {
