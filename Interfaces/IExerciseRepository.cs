@@ -18,6 +18,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Interfaces
         List<Exercise> GetExercisesByMuscle(string muscle);
         List<Exercise> GetExercisesByName(string name);
         List<ExerciseWithSets> GetExercisesByTrainingPlan(int trainingPlanId);
+        List<Exercise> GetAllExercises();
 
     }
 }

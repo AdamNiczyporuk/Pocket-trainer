@@ -26,7 +26,7 @@ namespace APIS
         private string LoadApiKey()
         {
             // Zakładamy, że plik z kluczem znajduje się w katalogu roboczym
-            StreamReader sr = new StreamReader("D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\KCK\\KCK_Project_ Console(Pocket trainer)\\config.txt");
+            StreamReader sr = new StreamReader("C:\\Users\\jakub\\OneDrive\\Pulpit\\studia\\V semestr informatyka\\kck\\projektKCKkonsola\\appsettings.json");
             string line = sr.ReadLine();
 
 
@@ -43,14 +43,15 @@ namespace APIS
 
             Configuration = builder.Build();
 
-            apiKey = Configuration["ExerciseApi:sApiKey"];
+            apiKey = Configuration["ExerciseApi:ApiKey"];
+            
         }
 
         public async Task GetExerciseData(string muscle)
         {
             string apiUrl = $"https://api.api-ninjas.com/v1/exercises?muscle={muscle}";
             var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
-            string APIKey = LoadApiKey();
+            string APIKey = apiKey;
             request.Headers.Add("X-Api-Key", APIKey);
 
             try

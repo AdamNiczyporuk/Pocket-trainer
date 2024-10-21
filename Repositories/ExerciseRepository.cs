@@ -74,6 +74,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
 
             return exercisesWithSets;
         }
+        public List<Exercise> GetAllExercises()
+        {
+            return _context.Exercises.ToList();
+        }
+
 
 
         public bool Save()

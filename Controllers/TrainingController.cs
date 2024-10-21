@@ -1,4 +1,5 @@
 ﻿using KCK_Project__Console_Pocket_trainer_.Views;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,31 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         }
         public async Task Run()
         {
-            Console.Clear();
-            TrainingView.GetOption();
+            var exit = false;
+            while (!exit)
+            {
+                Console.Clear();
+                
+                var option = TrainingView.GetOption();
+                switch(option)
+                {
+                    case "Do training":
+                        //Do training
+                        break;
+                    case "See training plans":
+                        //See training plans
+                        break;
+                    case "Track your progress":
+                        //Track your progress
+                        break;
+                    case "See exercises":
+                        new ExerciseController().ShowExercises();
+                        break;
+                    case "Back":
+                        exit = true;
+                        break;
+                }
+            }
         }
     }
 }

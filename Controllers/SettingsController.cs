@@ -31,7 +31,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     switch (option)
                     {
                         case "Add Account Data":
-                          
+                            
                             break;
                         case "Exit":
                             exit = true;
