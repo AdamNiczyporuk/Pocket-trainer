@@ -61,6 +61,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         {
             AnsiConsole.Write(new FigletText("POCKET TRAINER").Color(Color.Red));
         }
+        public static void LineBettwenScetion()
+        {
+            AnsiConsole.Write(new Rule().RuleStyle(Style.Parse("red")));
+        }
     }
 }
 

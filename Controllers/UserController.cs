@@ -23,7 +23,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 Console.Clear();
                 //StartMenuView.Greet();
                 StartMenuView.PocketTrainerWriting();
-                AnsiConsole.Write(new Rule().RuleStyle(Style.Parse("red")));
+                StartMenuView.LineBettwenScetion();
                 var option = StartMenuView.GetOption();
                 switch (option)
                 {
