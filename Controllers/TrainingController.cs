@@ -73,7 +73,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         //Edit training plan
                         break;
                     case "Delete training plan":
-                        //Delete training plan
+                        DeleteTrainingPlan();
                         break;
                     case "Back":
                         break;
@@ -81,7 +81,39 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             }
 
         }
-        public void AddTrainingPlan()
+        public void DeleteTrainingPlan()
+        {
+            var context = new ApplicationDbContext();
+            var trainingPlanRepository = new TrainingPlanRepository(context);
+            var trainingPlans = trainingPlanRepository.GetUserTrainingPlans(Program.user.Id);
+            var id = TrainingPlanView.ChooseTrainingPlan(trainingPlans);
+            if (id == -1)
+            {
+                StartMenuView.ShowMessage("No training plans available...");
+                Thread.Sleep(2000);
+                return;
+            }
+            var trainingPlan = trainingPlanRepository.GetTrainingPlanById(id);
+            var answer = ExerciseView.YesNoDialogue("[blue]Are you sure you want to delete this training plan?[/]");
+            if (answer == "Yes")
+            {
+                if (trainingPlanRepository.Delete(trainingPlan))
+                {
+                    AnsiConsole.MarkupLine("[green]Training plan deleted![/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Training plan not deleted![/]");
+                }
+
+            }
+            else {
+                AnsiConsole.MarkupLine("[green]Returning...[/]");
+            }
+            Thread.Sleep(2000);
+
+        }
+            public void AddTrainingPlan()
         {
             Console.Clear();
             TrainingPlanView.TrainingPlanWriting();
