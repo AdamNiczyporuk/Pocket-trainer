@@ -34,7 +34,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     switch (option)
                     {
                         case "Add Account Data":
-                            
+                            AddingData();
                             break;
                         case "Exit":
                             exit = true;
@@ -75,20 +75,16 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 {
                     Console.Clear();
                        
-                        float  Weight = StartMenuView.GetUsername();
-                        float Height = StartMenuView.GetPassword();
-                        int WeeklyTrainings = StartMenuView.GetPassword();
+                        float  Weight = SettingsView.GetWeight();
+                        float Height = SettingsView.GetHeight();
+                        int WeeklyTrainings = SettingsView.GetTrainings();
                         User user = new User()
-                        {
-                           UserName = Program.user.UserName,
-                           Password = Program.user.Password,
-                           Weight = Weight,
-                        };
-                    userRepository.Update(Program.user);
-
-
-                    
-
+                            {
+                               UserName = Program.user.UserName,
+                               Password = Program.user.Password,
+                               Weight = Weight,
+                            };
+                        userRepository.Update(Program.user);
                 }
             }
 

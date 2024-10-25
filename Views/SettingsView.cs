@@ -37,21 +37,21 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                                   .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
             return option;
         }
-        public static string GetHeight()
+        public static float GetHeight()
         {
             AnsiConsole.MarkupLine("Login Panel");
-            var height = AnsiConsole.Ask<string>("Enter your [yellow]Height[/]:");
+            var height = AnsiConsole.Ask<float>("Enter your [yellow]Height[/]:");
             return height;
         }
-        public static string GetWeight()
+        public static float GetWeight()
         {
             AnsiConsole.MarkupLine("Login Panel");
-            var weight = AnsiConsole.Ask<string>("Enter your [yellow]Weight[/]:");
+            var weight = AnsiConsole.Ask<float>("Enter your [yellow]Weight[/]:");
             return weight;
-        } public static string GetTrainings()
+        } public static int GetTrainings()
         {
             AnsiConsole.MarkupLine("Login Panel");
-            var trainings = AnsiConsole.Ask<string>("Enter your [yellow]how often do you train per week? [/]:");
+            var trainings = AnsiConsole.Ask<int>("Enter your [yellow]how often do you train per week? [/]:");
             return trainings;
         }
         public static void ShowUserSettings(User user)
