@@ -36,5 +36,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
             _context.ExercisesToTrainingPlans.Update(exerciseToTrainingPlan);
             return Save();
         }
+        public ExerciseToTrainingPlan GetExerciseToTrainingPlan(int trainingPlanId, int exerciseId)
+        {
+            return _context.ExercisesToTrainingPlans.FirstOrDefault(e => e.TrainingPlanId == trainingPlanId && e.ExerciseId == exerciseId);
+        }
     }
 }

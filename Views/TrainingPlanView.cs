@@ -1,6 +1,7 @@
 ﻿using KCK_Project__Console_Pocket_trainer_.Data;
 using KCK_Project__Console_Pocket_trainer_.Models;
 using KCK_Project__Console_Pocket_trainer_.Repositories;
+using KCK_Project__Console_Pocket_trainer_.ViewModels;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Spectre.Console;
 using System;
@@ -115,6 +116,26 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                 "Back"
            }).WrapAround());
             return option;
+        }
+        public static int ChooseExercise(List<ExerciseWithSets> exercises)
+        {
+            if (exercises == null || exercises.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]No exercises available.[/]");
+                return -1;
+            }
+            var exerciseNames = exercises.Select(e => e.Name).ToList();
+
+            var chosenName = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow]Choose an exercise:[/]")
+                    .PageSize(10)
+                    .WrapAround(true)
+                    .AddChoices(exerciseNames)
+                    .HighlightStyle(new Style(foreground: Color.DarkMagenta)));
+
+            var selectedExercise = exercises.FirstOrDefault(e => e.Name == chosenName);
+            return selectedExercise?.Id ?? -1;
         }
     }
 }

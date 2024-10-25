@@ -217,7 +217,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                             //Edit training plan
                             break;
                         case "Delete exercise":
-                            //Delete training plan
+                            DeleteExerciseFromTrainingPlan(id);
                             break;
                         case "Back":
                             break;
@@ -225,6 +225,38 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 }
             }
 
+        }
+        public void DeleteExerciseFromTrainingPlan(int trainingPlanId) { 
+            var context = new ApplicationDbContext();
+            var exerciseRepository = new ExerciseRepository(context);
+            var exerciseToTrainingPlanRepository = new ExerciseToTrainingPlanRepository(context);
+            var exercises = exerciseRepository.GetExercisesByTrainingPlan(trainingPlanId);
+            var exerciseId = TrainingPlanView.ChooseExercise(exercises);
+            if (exerciseId == -1)
+            {
+                StartMenuView.ShowMessage("No exercises available...");
+                Thread.Sleep(2000);
+                return;
+            }
+            var exerciseToTrainingPlan = exerciseToTrainingPlanRepository.GetExerciseToTrainingPlan(trainingPlanId,exerciseId);
+            var answer = ExerciseView.YesNoDialogue("[blue]Are you sure you want to delete this exercise from training plan?[/]");
+            if (answer == "Yes")
+            {
+                if (exerciseToTrainingPlanRepository.Delete(exerciseToTrainingPlan))
+                {
+                    AnsiConsole.MarkupLine("[green]Exercise deleted![/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Exercise not deleted![/]");
+                }
+
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[green]Returning...[/]");
+            }
+            Thread.Sleep(2000);
         }
         
         public void AddExerciseToTrainingPlan(int trainingPlanId)
