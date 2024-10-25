@@ -57,6 +57,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         {
             AnsiConsole.MarkupLine($"[green]Hello user! To use Pocket Trainer first you need to login.[/]");
         }
+        public 
     }
 }
 
