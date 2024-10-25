@@ -157,14 +157,20 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             
             while (true)
             {
-                var input = AnsiConsole.Ask<string>("Enter number of [blue]Reps[/] for each [yellow]Set[/] (separeted by comma X,X,X ):");
+                var format = "";
+                for (int i = 0; i < sets; i++)
+                {
+                    format += "X,";
+                }
+                format = format.Remove(format.Length - 1);
+                var input = AnsiConsole.Ask<string>($"Enter number of [blue]Reps[/] for each [yellow]Set[/] (separeted by comma {format} ):");
 
                 var reps = input.Split(',');
                 List<int> repsList = new List<int>();
                 bool isValid = true;
                 if (reps.Length == sets)
                 {
-                    
+
                     for (int i = 0; i < sets; i++)
                     {
                         if (Int32.TryParse(reps[i], out int rep) && rep >= 1 && rep <= 100)
@@ -180,9 +186,12 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     {
                         return repsList;
                     }
+                    else
+                    {
+                        AnsiConsole.MarkupLine("[red]Please enter valid Reps.[/]");
+                    }
+
                 }
-                
-               
 
             }
         }
@@ -190,7 +199,13 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         {
             while (true)
             {
-                var input = AnsiConsole.Ask<string>("Enter [blue]Weight[/] in kg for each [yellow]Set[/] (separeted by comma X,X,X ):");
+                var format = "";
+                for (int i = 0; i < sets; i++)
+                {
+                    format += "X,";
+                }
+                format = format.Remove(format.Length - 1);
+                var input = AnsiConsole.Ask<string>($"Enter [blue]Weight[/] in kg for each [yellow]Set[/] (separeted by comma {format} ):");
 
                 var reps = input.Split(',');
                 List<int> repsList = new List<int>();
@@ -212,6 +227,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     if (isValid)
                     {
                         return repsList;
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine("[red]Please enter valid Weight.[/]");
                     }
                 }
 
