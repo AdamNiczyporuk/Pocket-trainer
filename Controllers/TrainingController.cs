@@ -108,31 +108,56 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         }
         public void ManageExercises()
         {
-            var option = "";
-            while (option != "Back")
+            var id = -1;
+            using (var context = new ApplicationDbContext())
             {
+                var trainingPlanRepository = new TrainingPlanRepository(context);
+                var exerciseRepository = new ExerciseRepository(context);
+
                 Console.Clear();
-                
-                option = TrainingPlanView.GetManageExerciseOption();
-                switch (option)
+                TrainingPlanView.TrainingPlanWriting();
+                var trainingPlans = trainingPlanRepository.GetUserTrainingPlans(Program.user.Id);
+                id = TrainingPlanView.ChooseTrainingPlan(trainingPlans);
+                if (id == -1)
+                {
+                    StartMenuView.ShowMessage("No training plans available...");
+                    Thread.Sleep(2000);
+                    return;
+                }
+               
+
+                var option = "";
+
+                while (option != "Back")
                 {
                     
-                    case "Add exercise":
-                        AddExerciseToTrainingPlan();
-                        break;
-                    case "Edit exercise":
-                        //Edit training plan
-                        break;
-                    case "Delete exercise":
-                        //Delete training plan
-                        break;
-                    case "Back":
-                        break;
+                    Console.Clear();
+                    TrainingPlanView.TrainingPlanWriting();
+                    var exercises = exerciseRepository.GetExercisesByTrainingPlan(id);
+                    ExerciseView.ShowExercisesWithSets(exercises);
+
+                    option = TrainingPlanView.GetManageExerciseOption();
+                    switch (option)
+                    {
+
+                        case "Add exercise":
+                            AddExerciseToTrainingPlan(id);
+                            break;
+                        case "Edit exercise":
+                            //Edit training plan
+                            break;
+                        case "Delete exercise":
+                            //Delete training plan
+                            break;
+                        case "Back":
+                            break;
+                    }
                 }
             }
 
         }
-        public void AddExerciseToTrainingPlan()
+        
+        public void AddExerciseToTrainingPlan(int trainingPlanId)
         {
 
             using (var context = new ApplicationDbContext())
@@ -142,29 +167,24 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
                 Console.Clear();
                 TrainingPlanView.TrainingPlanWriting();
-                var trainingPlans = trainingPlanRepository.GetUserTrainingPlans(Program.user.Id);
-                var id = TrainingPlanView.ChooseTrainingPlan(trainingPlans);
-                if (id == -1)
-                {
-                    StartMenuView.ShowMessage("No training plans available...");
-                    Thread.Sleep(2000);
-                    return;
-                }
+               
+                var trainingPlan = trainingPlanRepository.GetTrainingPlanById(trainingPlanId);
                 var exit = false;
                 while (!exit)
                 {
-                    Console.Clear();
-                    TrainingPlanView.TrainingPlanWriting();
+                   
 
-                    var exercises = exerciseRepository.GetExercisesByTrainingPlan(id);
-                    ExerciseView.ShowExercisesWithSets(exercises);
-                    StartMenuView.ShowMessage($"Choose exercise to add to {trainingPlans.FirstOrDefault(tp => tp.Id == id).Name} training plan:");
+                    var exercises = exerciseRepository.GetExercisesByTrainingPlan(trainingPlanId);
+                    
+
+                    Console.Clear();
+                    ExerciseView.ExerciseWriting();
 
                     var exercise = new ExerciseController().ChooseExercise();
                     var isAlreadyAdded = exercises.Any(e => e.Id == exercise.Id);
                     if (isAlreadyAdded)
                     {
-                        StartMenuView.ShowMessage("Exercise already added to this training plan...");
+                        StartMenuView.ShowMessage("[red]Exercise already added to this training plan...[/]");
                         var answer = ExerciseView.YesNoDialogue("Do you want to add another exercise?");
                         if (answer == "No")
                         {
@@ -180,7 +200,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         var exerciseWithSets = new ExerciseToTrainingPlan()
                         {
                             ExerciseId = exercise.Id,
-                            TrainingPlanId = id,
+                            TrainingPlanId = trainingPlanId,
                             Sets = sets,
                             Reps = ExerciseService.RepsAndWeightsToString(Reps),
                             Weight = ExerciseService.RepsAndWeightsToString(Weight)

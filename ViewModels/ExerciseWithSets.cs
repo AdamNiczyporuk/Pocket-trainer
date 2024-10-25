@@ -37,9 +37,9 @@ namespace KCK_Project__Console_Pocket_trainer_.ViewModels
             string setsString = "";
             for (int i = 0; i < Sets; i++)
             {
-                setsString += $"{RepsList[i]} x {WeightList[i]} kg,";
+                setsString += $"{RepsList[i]} x {WeightList[i]} kg, ";
             }
-            setsString = setsString.Remove(setsString.Length - 1);
+            setsString = setsString.Remove(setsString.Length - 2);
             return setsString;
         }
     }

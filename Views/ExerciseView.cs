@@ -219,5 +219,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             }
             
         }
+        public static void ExerciseWriting()
+        {
+            AnsiConsole.Write(new FigletText("Exercise").Color(Color.Orange1).Centered());
+            AnsiConsole.Write(new Rule().RuleStyle(Style.Parse("Orange")));
+        }
     }
 }
