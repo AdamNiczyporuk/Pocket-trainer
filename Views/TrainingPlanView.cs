@@ -78,5 +78,29 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 
             AnsiConsole.Write(table);
         }
+        public static int ChooseTrainingPlan(List<TrainingPlan> trainingPlans) {
+            if (trainingPlans == null || trainingPlans.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]No training plans available.[/]");
+                return -1;
+            }
+            var trainingPlanNames = trainingPlans.Select(tp => tp.Name).ToList();
+
+            var chosenName = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow]Choose a training plan:[/]")
+                    .PageSize(10)
+                    .WrapAround(true)
+                    .AddChoices(trainingPlanNames)
+                    .HighlightStyle(new Style(foreground: Color.DarkMagenta)));
+
+            var selectedPlan = trainingPlans.FirstOrDefault(tp => tp.Name == chosenName);
+            return selectedPlan?.Id ?? -1;
+
+
+
+
+
+        }
     }
 }

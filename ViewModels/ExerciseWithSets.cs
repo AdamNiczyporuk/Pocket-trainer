@@ -7,15 +7,9 @@ using System.Threading.Tasks;
 
 namespace KCK_Project__Console_Pocket_trainer_.ViewModels
 {
-    public class ExerciseWithSets
+    public class ExerciseWithSets : Exercise
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string Muscle { get; set; }
-        public string Equipment { get; set; }
-        public string Difficulty { get; set; }
-        public string Instructions { get; set; }
+       
         public int Sets { get; set; }
         public List<int> RepsList { get; set; }
         public List<int> WeightList { get; set; }
@@ -38,6 +32,15 @@ namespace KCK_Project__Console_Pocket_trainer_.ViewModels
             Difficulty = exercsie.Difficulty;
             Instructions = exercsie.Instructions;
             Sets = sets;
+        }
+        public string SetsToString() {
+            string setsString = "";
+            for (int i = 0; i < Sets; i++)
+            {
+                setsString += $"{RepsList[i]} x {WeightList[i]} kg,";
+            }
+            setsString = setsString.Remove(setsString.Length - 1);
+            return setsString;
         }
     }
 }

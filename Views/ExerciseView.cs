@@ -1,4 +1,5 @@
 ﻿using KCK_Project__Console_Pocket_trainer_.Models;
+using KCK_Project__Console_Pocket_trainer_.ViewModels;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,28 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     new Markup(exercise.Difficulty)
                 );
                 table.AddEmptyRow(); // Add an empty row to separate each exercise
+            }
+
+            AnsiConsole.Render(table);
+        }
+        public static void ShowExercisesWithSets(List<ExerciseWithSets> exercises)
+        {
+            var table = new Table();
+            table.AddColumn(new TableColumn("[green]Name[/]").Centered());
+            table.AddColumn(new TableColumn("[blue]Sets[/]").Centered());
+            table.AddColumn(new TableColumn("[red]Reps and Weight[/]").Centered());
+            table.Border = TableBorder.Rounded;
+            table.Expand();
+
+            foreach (var exercise in exercises)
+            {
+                table.AddRow(
+                    new Markup(exercise.Name),
+                    new Markup(exercise.Sets.ToString()),
+                    new Markup(exercise.SetsToString())
+
+                );
+                 // Add an empty row to separate each exercise
             }
 
             AnsiConsole.Render(table);
@@ -109,6 +132,28 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             AnsiConsole.Render(data);
             AnsiConsole.Render(instructions);
 
+        }
+        public string GetSets()
+        {
+            var sets = AnsiConsole.Prompt(
+                new TextPrompt<int>("Enter number of sets:")
+                    .PromptStyle("red"));
+            return sets.ToString();
+
+        }
+        public string GetReps()
+        {
+            var reps = AnsiConsole.Prompt(
+                new TextPrompt<string>("Enter reps for each set (format X,X,X):")
+                    .PromptStyle("red"));
+            return reps;
+        }
+        public string GetWeight()
+        {
+            var weight = AnsiConsole.Prompt(
+                new TextPrompt<string>("Enter weight for each set (format X,X,X):")
+                    .PromptStyle("red"));
+            return weight;
         }
     }
 }
