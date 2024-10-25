@@ -39,20 +39,57 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         }
         public static float GetHeight()
         {
-            AnsiConsole.MarkupLine("Login Panel");
-            var height = AnsiConsole.Ask<float>("Enter your [yellow]Height[/]:");
-            return height;
+            float height;
+            while (true)
+            {
+                var input = AnsiConsole.Ask<string>("Enter your [yellow]Height[/]:");
+
+                // Sprawdzamy, czy wejście jest liczbą i ma 3 cyfry
+                if (float.TryParse(input, out height) && input.Length == 3 && height < 300.00)
+                {
+                    return height;
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Please enter a valid height [/]");
+                }
+            }
         }
         public static float GetWeight()
         {
-            AnsiConsole.MarkupLine("Login Panel");
-            var weight = AnsiConsole.Ask<float>("Enter your [yellow]Weight[/]:");
-            return weight;
+            float weight;
+            while (true)
+            {
+                var input = AnsiConsole.Ask<string>("Enter your [yellow]Weight[/]:");
+
+                // Sprawdzamy, czy wejście jest liczbą i ma 3 cyfry
+                if (float.TryParse(input, out weight) && input.Length == 3 && weight< 400)
+                {
+                    return weight;
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Please enter a valid Weight.[/]");
+                }
+            }
+
         } public static int GetTrainings()
         {
-            AnsiConsole.MarkupLine("Login Panel");
-            var trainings = AnsiConsole.Ask<int>("Enter your [yellow]how often do you train per week? [/]:");
-            return trainings;
+            int trainings;
+            while (true)
+            {
+                var input = AnsiConsole.Ask<string>("Enter your [yellow]Traings Per Week[/]:");
+
+                // Sprawdzamy, czy wejście jest liczbą i ma 3 cyfry
+                if (int.TryParse(input, out trainings) && input.Length == 1)
+                {
+                    return trainings;
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Please enter a valid Traings Per Week.[/]");
+                }
+            }
         }
         public static void ShowUserSettings(User user)
         {
