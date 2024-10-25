@@ -26,6 +26,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             {
                 Console.Clear();
                 MainPanelView.PocketTrainerWriting();
+                MainPanelView.LineBettwenScetion();
                 var option = TrainingView.GetOption();
                 switch (option)
                 {
@@ -70,7 +71,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         AddTrainingPlan();
                         break;
                     case "Edit training plan":
-                        //Edit training plan
+                        EditTrainingPlan();
                         break;
                     case "Delete training plan":
                         DeleteTrainingPlan();
@@ -79,6 +80,43 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         break;
                 }
             }
+
+        }
+        public void EditTrainingPlan()
+        {
+            var context = new ApplicationDbContext();
+            var trainingPlanRepository = new TrainingPlanRepository(context);
+            var trainingPlans = trainingPlanRepository.GetUserTrainingPlans(Program.user.Id);
+            var id = TrainingPlanView.ChooseTrainingPlan(trainingPlans);
+            if (id == -1)
+            {
+                StartMenuView.ShowMessage("No training plans available...");
+                Thread.Sleep(2000);
+                return;
+            }
+            var trainingPlan = trainingPlanRepository.GetTrainingPlanById(id);
+            trainingPlan.Name = TrainingPlanView.GetName();
+            trainingPlan.Description = TrainingPlanView.GetDescription();
+            var answer = ExerciseView.YesNoDialogue("[blue]Do you want to save changes?[/]");
+            if (answer == "Yes")
+            {
+                if (trainingPlanRepository.Update(trainingPlan))
+                {
+                    AnsiConsole.MarkupLine("[green]Training plan updated![/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Training plan not updated![/]");
+                }
+
+            }else
+            {
+                AnsiConsole.MarkupLine("[green]Returning...[/]");
+            }
+            Thread.Sleep(2000);
+
+
+
 
         }
         public void DeleteTrainingPlan()

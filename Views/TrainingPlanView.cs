@@ -55,7 +55,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             var table = new Table();
 
             table.Border = TableBorder.Rounded;
-            table.AddColumn("[yellow]ID[/]");
+            
             table.AddColumn("[green]Name[/]");
             table.AddColumn("[blue]Description[/]");
             table.AddColumn("[purple]Created At[/]");
@@ -68,7 +68,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     var exerciseRepository = new ExerciseRepository(context);
                     var exercisesCount = exerciseRepository.GetExercisesByTrainingPlan(plan.Id).Count;
                     table.AddRow(
-                        plan.Id.ToString(),
+                        
                         plan.Name ?? "[italic]No name[/]",
                         plan.Description ?? "[italic]No description[/]",
                         plan.CreatedAt.ToString("yyyy-MM-dd"),
