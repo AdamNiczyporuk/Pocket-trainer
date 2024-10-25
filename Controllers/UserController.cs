@@ -24,6 +24,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 //StartMenuView.Greet();
                 StartMenuView.PocketTrainerWriting();
                 StartMenuView.LineBettwenScetion();
+                AnsiConsole.WriteLine();
                 var option = StartMenuView.GetOption();
                 switch (option)
                 {
@@ -43,12 +44,17 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         public async Task Login()
         {
             Console.Clear();
+           
             using (var context = new ApplicationDbContext())
             {
                 var userRepository = new UserRepository(context);
                 while (true)
                 {
                     Console.Clear();
+                    StartMenuView.PocketTrainerWriting();
+                    StartMenuView.LineBettwenScetion();
+                    AnsiConsole.WriteLine();
+                    StartMenuView.Logging();
                     var username = StartMenuView.GetUsername();
                     var password = StartMenuView.GetPassword();
 
@@ -94,11 +100,17 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         public async Task SignIn()
         {
             Console.Clear();
+           
             using (var context = new ApplicationDbContext())
             {
                 var userRepository = new UserRepository(context);
                 while (true)
                 {
+                    StartMenuView.PocketTrainerWriting();
+                    StartMenuView.LineBettwenScetion();
+                    AnsiConsole.WriteLine();
+
+                    StartMenuView.Singin();
                     var username = StartMenuView.GetUsername();
                     var password = StartMenuView.GetPassword();
 

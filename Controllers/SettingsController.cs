@@ -1,4 +1,5 @@
-﻿using KCK_Project__Console_Pocket_trainer_.Data;
+﻿using Azure;
+using KCK_Project__Console_Pocket_trainer_.Data;
 using KCK_Project__Console_Pocket_trainer_.Repositories;
 using KCK_Project__Console_Pocket_trainer_.Views;
 using Spectre.Console;
@@ -7,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KCK_Project__Console_Pocket_trainer_.Repositories;
+using KCK_Project__Console_Pocket_trainer_.Models;
 
 namespace KCK_Project__Console_Pocket_trainer_.Controllers
 {
@@ -39,6 +42,27 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     }
                 }
             }
+            else
+            {
+                var exit = false;
+                while (!exit)
+                {
+                    Console.Clear();
+                    SettingsView.ShowUserSettings(Program.user);
+                    var option = Views.SettingsView.UpdateDataView();
+                    // Obsługa wsybranej opcji
+                    switch (option)
+                    {
+                        case "Update Account Data":
+
+                            break;
+                        case "Exit":
+                            exit = true;
+                            break;
+                    }
+                }
+            }
+
             
         }
         public async Task AddingData()
@@ -50,43 +74,20 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 while (true)
                 {
                     Console.Clear();
-                    var username = StartMenuView.GetUsername();
-                    var password = StartMenuView.GetPassword();
-
-                    var existingUser = userRepository.GetUserByUserName(username);
-                    if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
-                    {
-                        StartMenuView.ShowMessage("[red]Invalid username or password![/]");
-                        MainPanelView.Wait();
-
-                    }
-                    if (existingUser != null)
-                    {
-                        if (existingUser.Password == password)
+                       
+                        float  Weight = StartMenuView.GetUsername();
+                        float Height = StartMenuView.GetPassword();
+                        int WeeklyTrainings = StartMenuView.GetPassword();
+                        User user = new User()
                         {
-                            StartMenuView.ShowMessage("[green]Login sucess![/]");
-                            Program.user = existingUser;
-                            MainPanelView.Wait();
-                            break;
-                        }
-                        else
-                        {
-                            StartMenuView.ShowMessage("[red]Invalid username or password![/]");
-                            MainPanelView.Wait();
-                        }
-                    }
-                    else
-                    {
-                        StartMenuView.ShowMessage("[red]User does not exist![/]");
-                        MainPanelView.Wait();
-                    }
-                    var option = StartMenuView.DoYouWantToTryAgain();
-                    if (option == "No")
-                    {
-                        StartMenuView.ShowMessage("[red]Returning to Start Menu...[/]");
-                        MainPanelView.Wait();
-                        return;
-                    }
+                           UserName = Program.user.UserName,
+                           Password = Program.user.Password,
+                           Weight = Weight,
+                        };
+                    userRepository.Update(Program.user);
+
+
+                    
 
                 }
             }

@@ -25,6 +25,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             while (!exit)
             {
                 Console.Clear();
+                MainPanelView.PocketTrainerWriting();
+                MainPanelView.LineBettwenScetion();
+                AnsiConsole.WriteLine();
                 MainPanelView.Greet(Program.user.UserName);
                 var option = Views.MainPanelView.GetOption();
                 // Obsługa wsybranej opcji

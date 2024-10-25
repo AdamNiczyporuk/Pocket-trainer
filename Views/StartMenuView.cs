@@ -28,7 +28,6 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         }
         public static string GetUsername()
         {
-            AnsiConsole.MarkupLine("Login Panel");
             var username = AnsiConsole.Ask<string>("Enter your [yellow]Username[/]:");
             return username;
         }
@@ -40,6 +39,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     .Secret());
             return password;
         }
+
         public static string DoYouWantToTryAgain()
         {
             var option = AnsiConsole.Prompt(
@@ -59,11 +59,19 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         }
         public static void PocketTrainerWriting()
         {
-            AnsiConsole.Write(new FigletText("POCKET TRAINER").Color(Color.Red));
+            AnsiConsole.Write(new FigletText("POCKET TRAINER").Color(Color.Red).Centered());
         }
         public static void LineBettwenScetion()
         {
             AnsiConsole.Write(new Rule().RuleStyle(Style.Parse("red")));
+        }
+        public static void Singin()
+        {
+            AnsiConsole.MarkupLine("Sign In");
+        }
+        public static void Logging()
+        {
+            AnsiConsole.MarkupLine("Log In");
         }
     }
 }
