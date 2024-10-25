@@ -109,7 +109,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     AnsiConsole.MarkupLine("[red]Training plan not updated![/]");
                 }
 
-            }else
+            }
+            else
             {
                 AnsiConsole.MarkupLine("[green]Returning...[/]");
             }
@@ -145,13 +146,14 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 }
 
             }
-            else {
+            else
+            {
                 AnsiConsole.MarkupLine("[green]Returning...[/]");
             }
             Thread.Sleep(2000);
 
         }
-            public void AddTrainingPlan()
+        public void AddTrainingPlan()
         {
             Console.Clear();
             TrainingPlanView.TrainingPlanWriting();
@@ -194,13 +196,13 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     Thread.Sleep(2000);
                     return;
                 }
-               
+
 
                 var option = "";
 
                 while (option != "Back")
                 {
-                    
+
                     Console.Clear();
                     TrainingPlanView.TrainingPlanWriting();
                     var exercises = exerciseRepository.GetExercisesByTrainingPlan(id);
@@ -214,7 +216,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                             AddExerciseToTrainingPlan(id);
                             break;
                         case "Edit exercise":
-                            //Edit training plan
+                            EditExerciseFromTrainingPlan(id);
                             break;
                         case "Delete exercise":
                             DeleteExerciseFromTrainingPlan(id);
@@ -226,7 +228,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             }
 
         }
-        public void DeleteExerciseFromTrainingPlan(int trainingPlanId) { 
+        public void EditExerciseFromTrainingPlan(int trainingPlanId)
+        {
             var context = new ApplicationDbContext();
             var exerciseRepository = new ExerciseRepository(context);
             var exerciseToTrainingPlanRepository = new ExerciseToTrainingPlanRepository(context);
@@ -238,7 +241,47 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 Thread.Sleep(2000);
                 return;
             }
-            var exerciseToTrainingPlan = exerciseToTrainingPlanRepository.GetExerciseToTrainingPlan(trainingPlanId,exerciseId);
+            var exerciseToTrainingPlan = exerciseToTrainingPlanRepository.GetExerciseToTrainingPlan(trainingPlanId, exerciseId);
+
+            var sets = ExerciseView.GetSets();
+            var Reps = ExerciseView.GetReps(sets);
+            var Weight = ExerciseView.GetWeight(sets);
+            exerciseToTrainingPlan.Sets = sets;
+            exerciseToTrainingPlan.Reps = ExerciseService.RepsAndWeightsToString(Reps);
+            exerciseToTrainingPlan.Weight = ExerciseService.RepsAndWeightsToString(Weight);
+            var answer = ExerciseView.YesNoDialogue("[blue]Do you want to save changes?[/]");
+            if (answer == "Yes")
+            {
+                if (exerciseToTrainingPlanRepository.Update(exerciseToTrainingPlan))
+                {
+                    AnsiConsole.MarkupLine("[green]Exercise updated![/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Exercise not updated![/]");
+                }
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[green]Returning...[/]");
+            }
+
+            Thread.Sleep(2000);
+        }
+        public void DeleteExerciseFromTrainingPlan(int trainingPlanId)
+        {
+            var context = new ApplicationDbContext();
+            var exerciseRepository = new ExerciseRepository(context);
+            var exerciseToTrainingPlanRepository = new ExerciseToTrainingPlanRepository(context);
+            var exercises = exerciseRepository.GetExercisesByTrainingPlan(trainingPlanId);
+            var exerciseId = TrainingPlanView.ChooseExercise(exercises);
+            if (exerciseId == -1)
+            {
+                StartMenuView.ShowMessage("No exercises available...");
+                Thread.Sleep(2000);
+                return;
+            }
+            var exerciseToTrainingPlan = exerciseToTrainingPlanRepository.GetExerciseToTrainingPlan(trainingPlanId, exerciseId);
             var answer = ExerciseView.YesNoDialogue("[blue]Are you sure you want to delete this exercise from training plan?[/]");
             if (answer == "Yes")
             {
@@ -258,7 +301,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             }
             Thread.Sleep(2000);
         }
-        
+
         public void AddExerciseToTrainingPlan(int trainingPlanId)
         {
 
@@ -269,15 +312,15 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
                 Console.Clear();
                 TrainingPlanView.TrainingPlanWriting();
-               
+
                 var trainingPlan = trainingPlanRepository.GetTrainingPlanById(trainingPlanId);
                 var exit = false;
                 while (!exit)
                 {
-                   
+
 
                     var exercises = exerciseRepository.GetExercisesByTrainingPlan(trainingPlanId);
-                    
+
 
                     Console.Clear();
                     ExerciseView.ExerciseWriting();
