@@ -2,6 +2,7 @@
 using KCK_Project__Console_Pocket_trainer_.Interfaces;
 using KCK_Project__Console_Pocket_trainer_.Models;
 using KCK_Project__Console_Pocket_trainer_.Repositories;
+using KCK_Project__Console_Pocket_trainer_.Services;
 using KCK_Project__Console_Pocket_trainer_.Views;
 using Spectre.Console;
 using System;
@@ -63,7 +64,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 switch (option)
                 {
                     case "Manage Training Plan Exercises":
-                        AddTrainingPlan();
+                        ManageExercises();
                         break;
                     case "Add training plan":
                         AddTrainingPlan();
@@ -92,7 +93,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             using (var context = new ApplicationDbContext())
             {
                 var trainingPlanRepository = new TrainingPlanRepository(context);
-                
+
                 if (trainingPlanRepository.Add(trainingPlan))
                 {
                     AnsiConsole.MarkupLine("[green]Training plan added![/]");
@@ -106,7 +107,31 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
         }
         public void ManageExercises()
-        { }
+        {
+            var option = "";
+            while (option != "Back")
+            {
+                Console.Clear();
+                
+                option = TrainingPlanView.GetManageExerciseOption();
+                switch (option)
+                {
+                    
+                    case "Add exercise":
+                        AddExerciseToTrainingPlan();
+                        break;
+                    case "Edit exercise":
+                        //Edit training plan
+                        break;
+                    case "Delete exercise":
+                        //Delete training plan
+                        break;
+                    case "Back":
+                        break;
+                }
+            }
+
+        }
         public void AddExerciseToTrainingPlan()
         {
 
@@ -114,7 +139,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             {
                 var trainingPlanRepository = new TrainingPlanRepository(context);
                 var exerciseRepository = new ExerciseRepository(context);
-                
+
                 Console.Clear();
                 TrainingPlanView.TrainingPlanWriting();
                 var trainingPlans = trainingPlanRepository.GetUserTrainingPlans(Program.user.Id);
@@ -130,14 +155,14 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 {
                     Console.Clear();
                     TrainingPlanView.TrainingPlanWriting();
-                    
+
                     var exercises = exerciseRepository.GetExercisesByTrainingPlan(id);
                     ExerciseView.ShowExercisesWithSets(exercises);
                     StartMenuView.ShowMessage($"Choose exercise to add to {trainingPlans.FirstOrDefault(tp => tp.Id == id).Name} training plan:");
 
                     var exercise = new ExerciseController().ChooseExercise();
                     var isAlreadyAdded = exercises.Any(e => e.Id == exercise.Id);
-                    if(isAlreadyAdded)
+                    if (isAlreadyAdded)
                     {
                         StartMenuView.ShowMessage("Exercise already added to this training plan...");
                         var answer = ExerciseView.YesNoDialogue("Do you want to add another exercise?");
@@ -149,10 +174,27 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     }
                     else
                     {
+                        var sets = ExerciseView.GetSets();
+                        var Reps = ExerciseView.GetReps(sets);
+                        var Weight = ExerciseView.GetWeight(sets);
+                        var exerciseWithSets = new ExerciseToTrainingPlan()
+                        {
+                            ExerciseId = exercise.Id,
+                            TrainingPlanId = id,
+                            Sets = sets,
+                            Reps = ExerciseService.RepsAndWeightsToString(Reps),
+                            Weight = ExerciseService.RepsAndWeightsToString(Weight)
+                        };
 
+                        var exerciseToTrainingPlanRepository = new ExerciseToTrainingPlanRepository(context);
+                        exerciseToTrainingPlanRepository.Add(exerciseWithSets);
+                        StartMenuView.ShowMessage("[green]Exercise added to training plan...[/]");
+                        var answer = ExerciseView.YesNoDialogue("Do you want to add another exercise?");
+                        if (answer == "No")
+                        {
+                            exit = true;
+                        }
                     }
-
-
                 }
             }
         }

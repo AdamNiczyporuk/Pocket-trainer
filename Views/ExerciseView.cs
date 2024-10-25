@@ -133,27 +133,91 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             AnsiConsole.Render(instructions);
 
         }
-        public string GetSets()
+        public static int GetSets()
         {
-            var sets = AnsiConsole.Prompt(
-                new TextPrompt<int>("Enter number of sets:")
-                    .PromptStyle("red"));
-            return sets.ToString();
+            int sets;
+            while (true)
+            {
+                var input = AnsiConsole.Ask<string>("Enter number of [yellow]Sets[/]:");
+
+                
+                if (Int32.TryParse(input, out sets) && sets >= 1 && sets<=10)
+                {
+                    return sets;
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Please enter valid number of Sets.[/]");
+                }
+            }
 
         }
-        public string GetReps()
+        public static List<int> GetReps(int sets)
         {
-            var reps = AnsiConsole.Prompt(
-                new TextPrompt<string>("Enter reps for each set (format X,X,X):")
-                    .PromptStyle("red"));
-            return reps;
+            
+            while (true)
+            {
+                var input = AnsiConsole.Ask<string>("Enter number of [blue]Reps[/] for each [yellow]Set[/] (separeted by comma X,X,X ):");
+
+                var reps = input.Split(',');
+                List<int> repsList = new List<int>();
+                bool isValid = true;
+                if (reps.Length == sets)
+                {
+                    
+                    for (int i = 0; i < sets; i++)
+                    {
+                        if (Int32.TryParse(reps[i], out int rep) && rep >= 1 && rep <= 100)
+                        {
+                            repsList.Add(rep);
+                        }
+                        else
+                        {
+                            isValid = false;
+                        }
+                    }
+                    if (isValid)
+                    {
+                        return repsList;
+                    }
+                }
+                
+               
+
+            }
         }
-        public string GetWeight()
+        public static List<int> GetWeight(int sets)
         {
-            var weight = AnsiConsole.Prompt(
-                new TextPrompt<string>("Enter weight for each set (format X,X,X):")
-                    .PromptStyle("red"));
-            return weight;
+            while (true)
+            {
+                var input = AnsiConsole.Ask<string>("Enter [blue]Weight[/] in kg for each [yellow]Set[/] (separeted by comma X,X,X ):");
+
+                var reps = input.Split(',');
+                List<int> repsList = new List<int>();
+                bool isValid = true;
+                if (reps.Length == sets)
+                {
+
+                    for (int i = 0; i < sets; i++)
+                    {
+                        if (Int32.TryParse(reps[i], out int rep) && rep >= 1 && rep <= 100)
+                        {
+                            repsList.Add(rep);
+                        }
+                        else
+                        {
+                            isValid = false;
+                        }
+                    }
+                    if (isValid)
+                    {
+                        return repsList;
+                    }
+                }
+
+
+            }
+            
         }
     }
 }

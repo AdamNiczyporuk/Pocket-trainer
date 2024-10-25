@@ -63,7 +63,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                 var input = AnsiConsole.Ask<string>("Enter your [yellow]Weight[/]:");
 
                 // Sprawdzamy, czy wejście jest liczbą i ma 2 cyfry
-                if (float.TryParse(input, out weight) && input.Length == 2 && weight< 400)
+                if (float.TryParse(input, out weight) && input.Length >= 2 && weight< 400)
                 {
                     return weight;
                 }

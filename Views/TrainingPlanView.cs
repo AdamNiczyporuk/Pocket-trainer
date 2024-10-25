@@ -1,6 +1,7 @@
 ﻿using KCK_Project__Console_Pocket_trainer_.Data;
 using KCK_Project__Console_Pocket_trainer_.Models;
 using KCK_Project__Console_Pocket_trainer_.Repositories;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             new SelectionPrompt<string>()
            .Title("Choose an option:")
            .AddChoices(new[] {
-                "Add exercises to training plan",
+                "Manage Training Plan Exercises",
                 "Add training plan",
                 "Edit training plan",
                 "Delete training plan",
@@ -101,6 +102,19 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 
 
 
+        }
+        public static string GetManageExerciseOption()
+        {
+            var option = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+           .Title("Choose an option:")
+           .AddChoices(new[] {
+                "Add exercise",
+                "Edit exercise",
+                "Delete exercise",
+                "Back"
+           }).WrapAround());
+            return option;
         }
     }
 }

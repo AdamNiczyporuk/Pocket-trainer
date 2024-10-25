@@ -64,6 +64,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             var name = Views.ExerciseView.GetExerciseName(exercises);
             return exercises.FirstOrDefault(e => e.Name == name);
         }
-
+      
+        
     }
 }
