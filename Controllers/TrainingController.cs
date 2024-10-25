@@ -1,4 +1,7 @@
-﻿using KCK_Project__Console_Pocket_trainer_.Views;
+﻿using KCK_Project__Console_Pocket_trainer_.Data;
+using KCK_Project__Console_Pocket_trainer_.Models;
+using KCK_Project__Console_Pocket_trainer_.Repositories;
+using KCK_Project__Console_Pocket_trainer_.Views;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -19,15 +22,15 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             while (!exit)
             {
                 Console.Clear();
-                
+                MainPanelView.PocketTrainerWriting();
                 var option = TrainingView.GetOption();
                 switch(option)
                 {
                     case "Do training":
                         //Do training
                         break;
-                    case "See training plans":
-                        //See training plans
+                    case "Training Plans":
+                        ShowTrainingPlans();
                         break;
                     case "Track your progress":
                         //Track your progress
@@ -40,6 +43,64 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         break;
                 }
             }
+        }
+        public void ShowTrainingPlans()
+        {
+            var option = "";
+            while (option != "Back")
+            {
+                Console.Clear();
+                TrainingPlanView.TrainingPlanWriting();
+                using(var context = new ApplicationDbContext())
+                {
+                    var trainingPlanRepository = new TrainingPlanRepository(context);
+                    var trainingPlans = trainingPlanRepository.GetUserTrainingPlans(Program.user.Id);
+                    TrainingPlanView.ShowTrainingPlan(trainingPlans);
+                }
+                option = TrainingPlanView.GetOption();
+                switch (option)
+                {
+                    case "Add exercise to training plan":
+                        AddTrainingPlan();
+                        break;
+                    case "Add training plan":
+                        AddTrainingPlan();
+                        break;
+                    case "Edit training plan":
+                        //Edit training plan
+                        break;
+                    case "Delete training plan":
+                        //Delete training plan
+                        break;
+                    case "Back":
+                        break;
+                }
+            }
+
+        }
+        public void AddTrainingPlan()
+        {
+            Console.Clear();
+            TrainingPlanView.TrainingPlanWriting();
+            TrainingPlan trainingPlan = new TrainingPlan();
+            trainingPlan.Name = TrainingPlanView.GetName();
+            trainingPlan.Description = TrainingPlanView.GetDescription();
+            trainingPlan.CreatedAt = DateTime.Now;
+            trainingPlan.UserId = Program.user.Id;
+            using(var context = new ApplicationDbContext())
+            {
+                var trainingPlanRepository = new TrainingPlanRepository(context);
+                if(trainingPlanRepository.Add(trainingPlan))
+                {
+                    AnsiConsole.MarkupLine("[green]Training plan added![/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Training plan not added![/]");
+                }
+            }
+
+
         }
     }
 }
