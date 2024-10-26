@@ -24,7 +24,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         }
         private static async Task<String> GenerateDiet(DietRepository dietRepository)
         {
-            Console.Clear();
+            AnsiConsole.Clear();
             ChatGPT_diet.SetUpSetting();
             string prompt = ($"My weigh={Program.user.Weight},Height={Program.user.Height},TrainingsPerWeek={Program.user.TrainingsPerWeek}.Write me a diet plan for 7 seven days.");
 
@@ -35,10 +35,10 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
             var response = await responseTask;
 
-            Console.CursorVisible = true;
-            AnsiConsole.Clear();
-            AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
-            AnsiConsole.MarkupLine(response);
+            //Console.CursorVisible = true;
+            //AnsiConsole.Clear();
+            //AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
+            //AnsiConsole.MarkupLine(response);
 
             //var option = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[Green]Chose an option[/]")
             //    .AddChoices(new[] { "Save Diet", "Generate Again", "Exit" })
@@ -76,8 +76,26 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         if (option == "Generate Again")
                         {
                             AnsiConsole.Clear();
-                            await GenerateDiet(dietRepository);
-                            exit = true;
+                            string newDiet = await GenerateDiet(dietRepository);
+                            AnsiConsole.Clear();
+                            AnsiConsole.MarkupLine("[bold green]Diet Plan Generated:[/]");
+                            AnsiConsole.MarkupLine(newDiet);
+
+                            option = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                                .Title("[Green]Do you want to save the new diet?[/]")
+                                .AddChoices("Yes", "No"));
+
+                            if (option == "Yes")
+                            {
+                                Diet diet = new Diet
+                                {
+                                    Text = newDiet,
+                                    UserId = Program.user.Id,
+                                };
+
+                                dietRepository.Update(existingDiet[0]);
+                                AnsiConsole.MarkupLine("[bold green]New diet saved successfully![/]");
+                            }
                         }
                         else if (option == "Exit")
                         {
@@ -85,10 +103,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                             exit = true;
                         }
                     }
-                    else if(!existingDiet.Any())
+                    else
                     {
                         AnsiConsole.Clear();
                         var response = await GenerateDiet(dietRepository);
+                        AnsiConsole.MarkupLine(response);
                         var option = Views.DietView.GetOptionDietNotExist();
                         if (option == "Save Diet")
                         {
@@ -100,11 +119,14 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
                             dietRepository.Add(diet);
                             AnsiConsole.MarkupLine("[bold green]Diet saved successfully![/]");
+                            Console.ReadKey();  
+                            exit = true;
                         }
                         else if (option == "Generate Again")
                         {
                             AnsiConsole.Clear();
                             await GenerateDiet(dietRepository);
+                            exit= true;
                         }
                         else if (option == "Exit")
                         {
