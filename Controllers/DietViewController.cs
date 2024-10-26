@@ -62,7 +62,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 while (!exit)
                 { //There is a need to Add checker if user has data to generate diet
                     if (existingDiet.Any())
-                    {
+                    {   
+                        Console.Clear();
+                        DietView.DietWriting();
+                        DietView.LineBettwenScetion();
+                        Console.WriteLine();
                         AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
                         AnsiConsole.MarkupLine(existingDiet[0].Text);
 

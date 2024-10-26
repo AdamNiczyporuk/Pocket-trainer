@@ -26,7 +26,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         }
         public static void DietWriting()
         {
-            AnsiConsole.Write(new FigletText("Diet").Color(Color.Green).Centered());
+            AnsiConsole.Write(new FigletText("Diet Plan").Color(Color.Green).Centered());
         }
         public static void LineBettwenScetion()
         {
