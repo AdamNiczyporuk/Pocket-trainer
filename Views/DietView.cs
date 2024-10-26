@@ -24,6 +24,14 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                             .HighlightStyle(new Style(foreground: Color.Aqua)));
             return option;
         }
+        public static void DietWriting()
+        {
+            AnsiConsole.Write(new FigletText("Diet").Color(Color.Green).Centered());
+        }
+        public static void LineBettwenScetion()
+        {
+            AnsiConsole.Write(new Rule().RuleStyle(Style.Parse("green")));
+        }
 
     }
 }
