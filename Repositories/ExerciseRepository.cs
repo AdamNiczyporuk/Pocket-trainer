@@ -2,6 +2,7 @@ using KCK_Project__Console_Pocket_trainer_.Data;
 using KCK_Project__Console_Pocket_trainer_.Interfaces;
 using KCK_Project__Console_Pocket_trainer_.Models;
 using KCK_Project__Console_Pocket_trainer_.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -57,7 +58,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
                 {
                     Exercise = e.Exercise,
                     ExerciseToTrainingPlan = e
-                })
+                }).AsNoTracking()
                 .ToList();
 
             List<ExerciseWithSets> exercisesWithSets = new List<ExerciseWithSets>();

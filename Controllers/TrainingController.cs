@@ -3,7 +3,9 @@ using KCK_Project__Console_Pocket_trainer_.Interfaces;
 using KCK_Project__Console_Pocket_trainer_.Models;
 using KCK_Project__Console_Pocket_trainer_.Repositories;
 using KCK_Project__Console_Pocket_trainer_.Services;
+using KCK_Project__Console_Pocket_trainer_.ViewModels;
 using KCK_Project__Console_Pocket_trainer_.Views;
+using Microsoft.Identity.Client;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -31,7 +33,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 switch (option)
                 {
                     case "Do training":
-                        //Do training
+                        DoTraining();
                         break;
                     case "Training Plans":
                         ShowTrainingPlans();
@@ -47,6 +49,124 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         break;
                 }
             }
+        }
+        public void DoTraining()
+        {
+
+            Console.Clear();
+            TrainingView.TrainingWriting();
+            using (var context = new ApplicationDbContext())
+            {
+                var trainingPlanRepository = new TrainingPlanRepository(context);
+                var exerciseRepository = new ExerciseRepository(context);
+                var trainingRepository = new TrainingRepository(context);
+
+                var trainingPlans = trainingPlanRepository.GetUserTrainingPlans(Program.user.Id);
+                TrainingPlanView.ShowTrainingPlan(trainingPlans);
+
+                var id = TrainingPlanView.ChooseTrainingPlan(trainingPlans);
+                if (id == -1)
+                {
+                    StartMenuView.ShowMessage("No training plans available...");
+                    Thread.Sleep(2000);
+                    return;
+                }
+                Console.Clear();
+                TrainingView.TrainingWriting();
+                var exercises = exerciseRepository.GetExercisesByTrainingPlan(id);
+               // ExerciseView.ShowExercisesWithSets(exercises);
+                var Trening = new Training();
+                Trening.TreningPlanId = id;
+                Trening.UserId = Program.user.Id;
+                Trening.StartTime = DateTime.Now;
+                var answer = ExerciseView.YesNoDialogue("[blue]Do you want to start training?[/]");
+                if (answer == "Yes")
+                {
+                    trainingRepository.Add(Trening);
+                    StartMenuView.ShowMessage("Starting training...");
+                    StartTraining(Trening);
+                    return;
+
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[green]Returning...[/]");
+                    return;
+                }
+
+
+            }
+            
+
+
+        }
+        public void StartTraining(Training training)
+        {
+            var context = new ApplicationDbContext();
+            var exeerciseDoneRepository = new ExerciseDoneRepository(context);
+            var exerciseRepository = new ExerciseRepository(context);
+            var exit = false;
+            while (!exit)
+            {
+                var exercisesDone = exeerciseDoneRepository.GetExercisesDoneByTraining(training.Id);
+                var exercisesToDo = exerciseRepository.GetExercisesByTrainingPlan(training.TreningPlanId);
+                exercisesToDo.RemoveAll(e => exercisesDone.Any(ed => ed.Id == e.Id));
+                if(exercisesToDo.Count == 0)
+                {
+                    training.EndTime = DateTime.Now;
+                    if (new TrainingRepository(context).Update(training))
+                    {
+                        StartMenuView.ShowMessage("[green]Training Finished![/]");
+                        Thread.Sleep(2000);
+                    }
+                    return;
+                }
+                Console.Clear();
+                TrainingView.TrainingWriting();
+                TrainingView.ShowExerciseDoneAndToDo(exercisesDone, exercisesToDo);
+                var exerciseId = TrainingPlanView.ChooseExercise(exercisesToDo);
+                DoExercise(exercisesToDo.FirstOrDefault(e => e.Id == exerciseId), training.Id);
+                var answer = TrainingView.DoYouWantToFinishTraining();
+                if (answer == "Finish Training")
+                {
+                    exit = true;
+                    training.EndTime = DateTime.Now;
+                    if (new TrainingRepository(context).Update(training))
+                    {
+                        StartMenuView.ShowMessage("[green]Training Finished![/]");
+                        Thread.Sleep(2000);
+                    }
+                }
+            }
+        }
+        public void DoExercise(ExerciseWithSets ex,int trainingId)
+        {
+            Console.Clear();
+            TrainingView.TrainingWriting();
+            TrainingView.ShowExerciseDoing(ex);
+            var numberOfSets = ex.Sets;
+            List<int> RepsList = new List<int>();
+            List<int> WeightList = new List<int>();
+            for (int i = 0; i < numberOfSets; i++)
+            {
+                var info = TrainingView.GetSetInfo(i + 1);
+                RepsList.Add(info[0]);
+                WeightList.Add(info[1]);
+            }
+            StartMenuView.ShowMessage("[green]Exercise Finished![/]");
+            var context = new ApplicationDbContext();
+            var exeerciseDoneRepository = new ExerciseDoneRepository(context);
+            var exerciseDone = new ExerciseDone()
+            {
+                ExerciseId = ex.Id,
+                TrainingId = trainingId,
+                UserId = Program.user.Id,
+                Sets = numberOfSets,
+                Reps = ExerciseService.RepsAndWeightsToString(RepsList),
+                Weight = ExerciseService.RepsAndWeightsToString(WeightList)
+            };
+            exeerciseDoneRepository.Add(exerciseDone);
+            Thread.Sleep(2000);
         }
         public void ShowTrainingPlans()
         {
