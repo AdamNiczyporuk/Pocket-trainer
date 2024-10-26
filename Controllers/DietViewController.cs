@@ -89,11 +89,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                             AnsiConsole.MarkupLine("[bold green]Diet Plan Generated:[/]");
                             AnsiConsole.MarkupLine(newDiet);
 
-                            option = AnsiConsole.Prompt(new SelectionPrompt<string>()
-                                .Title("[Green]Do you want to save the new diet?[/]")
-                                .AddChoices("Yes", "No"));
+                            var  answer = DietView.SaveDietOrNO();
 
-                            if (option == "Yes")
+                            if (answer == "Yes")
                             {
                                 
                                 existingDiet[0].Text = newDiet;
