@@ -69,6 +69,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     {
                         if (existingUser.Password == password)
                         {
+                            Console.WriteLine();
                             StartMenuView.ShowMessage("[green]Login sucess![/]");
                             Program.user = existingUser;
                             MainPanelView.Wait();
@@ -76,18 +77,21 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         }
                         else
                         {
+                            Console.WriteLine();
                             StartMenuView.ShowMessage("[red]Invalid username or password![/]");
                             MainPanelView.Wait();
                         }
                     }
                     else
                     {
+                        Console.WriteLine();
                         StartMenuView.ShowMessage("[red]User does not exist![/]");
                         MainPanelView.Wait();
                     }
                     var option = StartMenuView.DoYouWantToTryAgain();
                     if (option == "No")
                     {
+                        Console.WriteLine();
                         StartMenuView.ShowMessage("[red]Returning to Start Menu...[/]");
                         MainPanelView.Wait();
                         return;
@@ -99,13 +103,14 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         }
         public async Task SignIn()
         {
-            Console.Clear();
+            AnsiConsole.Clear();
            
             using (var context = new ApplicationDbContext())
             {
                 var userRepository = new UserRepository(context);
                 while (true)
                 {
+                    AnsiConsole.Clear();
                     StartMenuView.PocketTrainerWriting();
                     StartMenuView.LineBettwenScetion();
                     AnsiConsole.WriteLine();
@@ -117,6 +122,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     var existingUser = userRepository.GetUserByUserName(username);
                     if (existingUser != null)
                     {
+                        Console.WriteLine();
                         StartMenuView.ShowMessage("[red]User already exists if it's you please login\nor try other username.[/]");
 
                     }
@@ -129,6 +135,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         };
                         userRepository.Add(user);
                         Program.user = user;
+                        Console.WriteLine();
                         StartMenuView.ShowMessage("[green]User added successfully![/]");
                         MainPanelView.Wait();
                         return;
@@ -137,6 +144,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     var option = StartMenuView.DoYouWantToTryAgain();
                     if (option == "No")
                     {
+                        Console.WriteLine();
                         StartMenuView.ShowMessage("[red]Returning to Start Menu...[/]");
                         MainPanelView.Wait();
                         return;

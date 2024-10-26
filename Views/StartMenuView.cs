@@ -42,6 +42,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
 
         public static string DoYouWantToTryAgain()
         {
+            Console.WriteLine();
             var option = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[yellow]Do you want to try again?:[/]")
