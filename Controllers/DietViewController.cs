@@ -62,11 +62,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 while (!exit)
                 { //There is a need to Add checker if user has data to generate diet
                     if (existingDiet.Any())
-                    {   
-                        Console.Clear();
-                        DietView.DietWriting();
-                        DietView.LineBettwenScetion();
-                        Console.WriteLine();
+                    {
+                        AnsiConsole.Clear();
                         AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
                         AnsiConsole.MarkupLine(existingDiet[0].Text);
 
@@ -78,6 +75,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
                         if (option == "Generate Again")
                         {
+                            AnsiConsole.Clear();
                             await GenerateDiet(dietRepository);
                             exit = true;
                         }
@@ -87,8 +85,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                             exit = true;
                         }
                     }
-                    else
+                    else if(!existingDiet.Any())
                     {
+                        AnsiConsole.Clear();
                         var response = await GenerateDiet(dietRepository);
                         var option = Views.DietView.GetOptionDietNotExist();
                         if (option == "Save Diet")
@@ -104,6 +103,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         }
                         else if (option == "Generate Again")
                         {
+                            AnsiConsole.Clear();
                             await GenerateDiet(dietRepository);
                         }
                         else if (option == "Exit")
