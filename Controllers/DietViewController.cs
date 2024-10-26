@@ -52,8 +52,16 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 var userController = new UserController();
                 await userController.Run();
             }
-            using (var context = new ApplicationDbContext())
+            if (Program.user.Weight == null || Program.user.Height == null || Program.user.TrainingsPerWeek == null)
             {
+                AnsiConsole.Clear();
+                AnsiConsole.MarkupLine("[red]You need to fill in your data first!\n Click any key to go back[/]");
+                Console.ReadKey();
+                return;
+            }
+            using (var context = new ApplicationDbContext())
+            {   
+                
                 var dietRepository = new DietRepository(context);
                 var existingDiet = dietRepository.GetUserDiets(Program.user.Id);
 
@@ -87,12 +95,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
                             if (option == "Yes")
                             {
-                                Diet diet = new Diet
-                                {
-                                    Text = newDiet,
-                                    UserId = Program.user.Id,
-                                };
-
+                                
+                                existingDiet[0].Text = newDiet;
                                 dietRepository.Update(existingDiet[0]);
                                 AnsiConsole.MarkupLine("[bold green]New diet saved successfully![/]");
                             }
@@ -118,15 +122,13 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                             };
 
                             dietRepository.Add(diet);
-                            AnsiConsole.MarkupLine("[bold green]Diet saved successfully![/]");
+                            AnsiConsole.MarkupLine("[bold green]Diet saved successfully!\n Click Any key to exit[/]");
                             Console.ReadKey();  
                             exit = true;
                         }
                         else if (option == "Generate Again")
                         {
-                            AnsiConsole.Clear();
-                            await GenerateDiet(dietRepository);
-                            exit= true;
+                            
                         }
                         else if (option == "Exit")
                         {
