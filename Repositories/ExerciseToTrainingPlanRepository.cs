@@ -40,5 +40,6 @@ namespace KCK_Project__Console_Pocket_trainer_.Repositories
         {
             return _context.ExercisesToTrainingPlans.FirstOrDefault(e => e.TrainingPlanId == trainingPlanId && e.ExerciseId == exerciseId);
         }
+        
     }
 }

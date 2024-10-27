@@ -32,16 +32,16 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 var option = TrainingView.GetOption();
                 switch (option)
                 {
-                    case "Do training":
+                    case "Do Training":
                         DoTraining();
                         break;
                     case "Training Plans":
                         ShowTrainingPlans();
                         break;
-                    case "Track your progress":
-                        //Track your progress
+                    case "Check Progress":
+                        CheckProgress();
                         break;
-                    case "See exercises":
+                    case "See Exercises":
                         new ExerciseController().ShowExercises();
                         break;
                     case "Back":
@@ -49,6 +49,31 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         break;
                 }
             }
+        }
+        public void CheckProgress()
+        {
+            Console.Clear();
+            TrainingPlanView.TrainingPlanWriting();
+            TrainingPlan choosenTrainingPlan;
+            using (var context = new ApplicationDbContext())
+            {
+                var trainingPlanRepository = new TrainingPlanRepository(context);
+
+                var trainingPlans = trainingPlanRepository.GetUserTrainingPlans(Program.user.Id);
+                TrainingPlanView.ShowTrainingPlan(trainingPlans);
+
+                var id = TrainingPlanView.ChooseTrainingPlan(trainingPlans);
+                if (id == -1)
+                {
+                    StartMenuView.ShowMessage("No training plans available...");
+                    Thread.Sleep(2000);
+                    return;
+                }
+                choosenTrainingPlan = trainingPlanRepository.GetTrainingPlanById(id);
+            }
+            var progressController = new ProgressController(choosenTrainingPlan);
+            progressController.Run();
+
         }
         public void DoTraining()
         {

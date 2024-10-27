@@ -21,7 +21,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                     .PageSize(10)
                     .WrapAround(true)// Maksymalna ilość opcji na jednej stronie
                     .AddChoices(new[] {
-                        "Do training", "Training Plans","Track your progress","See exercises", "Back"
+                        "Do Training", "Training Plans","Check Progress","See Exercises", "Back"
                     })
                     .HighlightStyle(new Style(foreground: Color.DarkMagenta_1)));
         return option;
