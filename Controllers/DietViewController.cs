@@ -72,6 +72,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     if (existingDiet.Any())
                     {
                         AnsiConsole.Clear();
+                        DietView.DietWriting();
+                        DietView.LineBettwenScetion();
                         AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
                         AnsiConsole.MarkupLine(existingDiet[0].Text);
 
@@ -84,6 +86,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         if (option == "Generate Again")
                         {
                             AnsiConsole.Clear();
+                            DietView.DietWriting();
+                            DietView.LineBettwenScetion();
                             string newDiet = await GenerateDiet(dietRepository);
                             AnsiConsole.Clear();
                             AnsiConsole.MarkupLine("[bold green]Diet Plan Generated:[/]");
@@ -108,6 +112,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     else
                     {
                         AnsiConsole.Clear();
+                        DietView.DietWriting();
+                        DietView.LineBettwenScetion();
                         var response = await GenerateDiet(dietRepository);
                         AnsiConsole.MarkupLine(response);
                         var option = Views.DietView.GetOptionDietNotExist();
