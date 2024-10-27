@@ -12,6 +12,7 @@ using KCK_Project__Console_Pocket_trainer_.Repositories;
 using Microsoft.EntityFrameworkCore;
 using KCK_Project__Console_Pocket_trainer_.Data;
 using Azure;
+using System.Security.Principal;
 
 
 namespace KCK_Project__Console_Pocket_trainer_.Controllers
@@ -48,11 +49,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 }
                 if(responseTask.IsCompleted)
                 {
-                    
-                    progressTask.Value = 99;
-                    await Task.Delay(30);
                     progressTask.Value = 100;
-                    await Task.Delay(30);
+                    await Task.Delay(500);
                 }
                 // Ustaw pasek na pełny postęp po zakończeniu responseTask
                 
