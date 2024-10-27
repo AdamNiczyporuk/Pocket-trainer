@@ -26,9 +26,17 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         }
         private static async Task DisplayTextSlowly(string text, int delay = 20)
         {
-            foreach (char c in text)
+            //foreach (char c in text)
+            //{
+            //    Console.Write(c);
+            //    await Task.Delay(delay);
+            //}
+            //Console.WriteLine();
+            for (int i = 0; i < text.Length; i += 2)
             {
-                Console.Write(c);
+                // Pobierz dwa kolejne znaki, jeśli są dostępne
+                string pair = i + 1 < text.Length ? text.Substring(i, 3) : text[i].ToString();
+                Console.Write(pair);
                 await Task.Delay(delay);
             }
             Console.WriteLine();
@@ -109,7 +117,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         DietView.DietWriting();
                         DietView.LineBettwenScetion();
                         AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
-                        AnsiConsole.MarkupLine(existingDiet[0].Text);
+                        //AnsiConsole.MarkupLine(existingDiet[0].Text);
+                        await DisplayTextSlowly(existingDiet[0].Text, 1);
 
                         var option = Views.DietView.GetOptionDietExist();
 
@@ -123,7 +132,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                             DietView.DietWriting();
                             DietView.LineBettwenScetion();
                             string newDiet = await GenerateDiet(dietRepository);
-                            await DisplayTextSlowly(newDiet, 5);
+                            DietView.DietWriting();
+                            DietView.LineBettwenScetion();
+                            await DisplayTextSlowly(newDiet, 1);
                             Console.WriteLine();
                             AnsiConsole.Clear();
                             AnsiConsole.MarkupLine("[bold green]Diet Plan Generated:[/]");
@@ -151,7 +162,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         DietView.DietWriting();
                         DietView.LineBettwenScetion();
                         var response = await GenerateDiet(dietRepository);
-                        AnsiConsole.MarkupLine(response);
+                        DietView.DietWriting();
+                        DietView.LineBettwenScetion();
+                        await DisplayTextSlowly(response, 1);
                         var option = Views.DietView.GetOptionDietNotExist();
                         if (option == "Save Diet")
                         {
