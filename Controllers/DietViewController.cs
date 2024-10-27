@@ -30,8 +30,32 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
             var responseTask = ChatGPT_diet.SendRequestToChatGPT(prompt);
 
-            Console.CursorVisible = false;
-            AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
+            //Console.CursorVisible = false;
+            //AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
+            await AnsiConsole.Progress()
+            .AutoClear(false)
+            .StartAsync(async context =>
+            {
+                var progressTask = context.AddTask("[green]Generating Diet...[/]");
+
+                while (!responseTask.IsCompleted)
+                {
+                    // Simuluj progres (np. zwiększaj o losowy procent w przedziale)
+                    progressTask.Increment(1.0);
+
+                    // Krótkie opóźnienie, aby symulować postęp ładowania
+                    await Task.Delay(100);
+                }
+                if(responseTask.IsCompleted)
+                {
+                    progressTask.Value = 99;
+                    await Task.Delay(10);
+                    progressTask.Value = 100;
+                }
+                // Ustaw pasek na pełny postęp po zakończeniu responseTask
+                
+               
+            });
 
             var response = await responseTask;
 
