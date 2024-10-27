@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KCK_Project__Console_Pocket_trainer_.Views
@@ -14,27 +15,44 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
         public static void ShowExercises(List<Exercise> exercises)
         {
             var table = new Table();
-            table.AddColumn(new TableColumn("[green]Name[/]").Centered());
-            table.AddColumn(new TableColumn("[blue]Type[/]").Centered());
-            table.AddColumn(new TableColumn("[red]Muscle[/]").Centered());
-            table.AddColumn(new TableColumn("[yellow]Equipment[/]").Centered());
-            table.AddColumn(new TableColumn("[magenta]Difficulty[/]").Centered());
+           
             table.Border = TableBorder.Rounded;
             table.Expand();
 
-            foreach (var exercise in exercises)
-            {
-                table.AddRow(
-                    new Markup(exercise.Name),
-                    new Markup(exercise.Type),
-                    new Markup(exercise.Muscle),
-                    new Markup(exercise.Equipment),
-                    new Markup(exercise.Difficulty)
-                );
-                table.AddEmptyRow(); // Add an empty row to separate each exercise
-            }
+           
 
-            AnsiConsole.Render(table);
+            AnsiConsole.Live(table)
+                .Start(ctx =>
+                {
+                    table.AddColumn(new TableColumn("[green]Name[/]").Centered());
+                    ctx.Refresh();
+                    Thread.Sleep(500);
+                    table.AddColumn(new TableColumn("[blue]Type[/]").Centered());
+                    ctx.Refresh();
+                    Thread.Sleep(500);
+                    table.AddColumn(new TableColumn("[red]Muscle[/]").Centered());
+                    ctx.Refresh();
+                    Thread.Sleep(500);
+                    table.AddColumn(new TableColumn("[yellow]Equipment[/]").Centered());
+                    ctx.Refresh();
+                    Thread.Sleep(500);
+                    table.AddColumn(new TableColumn("[magenta]Difficulty[/]").Centered());
+                    ctx.Refresh();
+                    Thread.Sleep(500);
+                    foreach (var exercise in exercises)
+                    {
+                        table.AddRow(
+                            new Markup(exercise.Name),
+                            new Markup(exercise.Type),
+                            new Markup(exercise.Muscle),
+                            new Markup(exercise.Equipment),
+                            new Markup(exercise.Difficulty)
+                        );
+                        table.AddEmptyRow(); // Add an empty row to separate each exercise
+                        ctx.Refresh();
+                        Thread.Sleep(100);
+                    }
+                });
         }
         public static void ShowExercisesWithSets(List<ExerciseWithSets> exercises)
         {

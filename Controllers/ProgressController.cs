@@ -32,7 +32,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             Console.Clear();
             ProgressView.CheckProgressWriting();
             ProgressView.ShowProgress(_trainingPlan.Name,trainings, volumes);
-            StartMenuView.ShowMessage("Press any key to return to the main menu...");
+            StartMenuView.ShowMessage("\n\nPress any key to return to the main menu...");
             Console.ReadKey();
         }
     }
