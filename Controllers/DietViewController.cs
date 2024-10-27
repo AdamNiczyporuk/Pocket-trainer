@@ -48,9 +48,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 }
                 if(responseTask.IsCompleted)
                 {
+                    
                     progressTask.Value = 99;
-                    await Task.Delay(10);
+                    await Task.Delay(30);
                     progressTask.Value = 100;
+                    await Task.Delay(30);
                 }
                 // Ustaw pasek na pełny postęp po zakończeniu responseTask
                 
