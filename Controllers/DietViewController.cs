@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using KCK_Project__Console_Pocket_trainer_.Data;
 using Azure;
 using System.Security.Principal;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace KCK_Project__Console_Pocket_trainer_.Controllers
@@ -22,6 +23,15 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         public DietViewController()
         {
 
+        }
+        private static async Task DisplayTextSlowly(string text, int delay = 20)
+        {
+            foreach (char c in text)
+            {
+                Console.Write(c);
+                await Task.Delay(delay);
+            }
+            Console.WriteLine();
         }
         private static async Task<String> GenerateDiet(DietRepository dietRepository)
         {
@@ -58,7 +68,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             });
 
             var response = await responseTask;
-
+            AnsiConsole.Clear(); 
             //Console.CursorVisible = true;
             //AnsiConsole.Clear();
             //AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
@@ -113,6 +123,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                             DietView.DietWriting();
                             DietView.LineBettwenScetion();
                             string newDiet = await GenerateDiet(dietRepository);
+                            await DisplayTextSlowly(newDiet, 5);
+                            Console.WriteLine();
                             AnsiConsole.Clear();
                             AnsiConsole.MarkupLine("[bold green]Diet Plan Generated:[/]");
                             AnsiConsole.MarkupLine(newDiet);
