@@ -32,11 +32,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             //    await Task.Delay(delay);
             //}
             //Console.WriteLine();
-            for (int i = 0; i < text.Length; i += 2)
+            for (int i = 0; i < text.Length; i += 3)
             {
-                // Pobierz dwa kolejne znaki, jeśli są dostępne
-                string pair = i + 1 < text.Length ? text.Substring(i, 3) : text[i].ToString();
-                Console.Write(pair);
+                // Pobierz trzy kolejne znaki, jeśli są dostępne
+                string triplet = i + 2 < text.Length ? text.Substring(i, 3) : text.Substring(i);
+                Console.Write(triplet);
                 await Task.Delay(delay);
             }
             Console.WriteLine();
@@ -117,8 +117,8 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         DietView.DietWriting();
                         DietView.LineBettwenScetion();
                         AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
-                        //AnsiConsole.MarkupLine(existingDiet[0].Text);
-                        await DisplayTextSlowly(existingDiet[0].Text, 1);
+                        AnsiConsole.MarkupLine(existingDiet[0].Text);
+                        
 
                         var option = Views.DietView.GetOptionDietExist();
 
