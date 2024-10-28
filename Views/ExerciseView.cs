@@ -26,19 +26,19 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                 {
                     table.AddColumn(new TableColumn("[green]Name[/]").Centered());
                     ctx.Refresh();
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                     table.AddColumn(new TableColumn("[blue]Type[/]").Centered());
                     ctx.Refresh();
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                     table.AddColumn(new TableColumn("[red]Muscle[/]").Centered());
                     ctx.Refresh();
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                     table.AddColumn(new TableColumn("[yellow]Equipment[/]").Centered());
                     ctx.Refresh();
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                     table.AddColumn(new TableColumn("[magenta]Difficulty[/]").Centered());
                     ctx.Refresh();
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                     foreach (var exercise in exercises)
                     {
                         table.AddRow(
