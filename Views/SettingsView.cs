@@ -48,7 +48,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                 var input = AnsiConsole.Ask<string>("Enter your [yellow]Height[/]:");
 
                 // Sprawdzamy, czy wejście jest liczbą i ma 3 cyfry
-                if (float.TryParse(input, out height) && input.Length == 3 && height < 300.00)
+                if (float.TryParse(input, out height) && input.Length == 2 && height < 300.00)
                 {
                     return height;
                 }
@@ -117,6 +117,14 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
             table.Columns[0].LeftAligned().Width(30);
             table.Columns[1].Centered();
             AnsiConsole.Render(table);
+        }
+        public static void SettingsWriting()
+        {
+            AnsiConsole.Write(new FigletText("Settings").Color(Color.Green).Centered());
+        }
+        public static void LineBettwenScetion()
+        {
+            AnsiConsole.Write(new Rule().RuleStyle(Style.Parse("green")));
         }
     }
 }

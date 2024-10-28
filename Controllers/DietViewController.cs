@@ -12,6 +12,8 @@ using KCK_Project__Console_Pocket_trainer_.Repositories;
 using Microsoft.EntityFrameworkCore;
 using KCK_Project__Console_Pocket_trainer_.Data;
 using Azure;
+using System.Security.Principal;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace KCK_Project__Console_Pocket_trainer_.Controllers
@@ -22,6 +24,23 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
         {
 
         }
+        private static async Task DisplayTextSlowly(string text, int delay = 20)
+        {
+            //foreach (char c in text)
+            //{
+            //    Console.Write(c);
+            //    await Task.Delay(delay);
+            //}
+            //Console.WriteLine();
+            for (int i = 0; i < text.Length; i += 3)
+            {
+                // Pobierz trzy kolejne znaki, jeśli są dostępne
+                string triplet = i + 2 < text.Length ? text.Substring(i, 3) : text.Substring(i);
+                Console.Write(triplet);
+                await Task.Delay(delay);
+            }
+            Console.WriteLine();
+        }
         private static async Task<String> GenerateDiet(DietRepository dietRepository)
         {
             AnsiConsole.Clear();
@@ -30,11 +49,34 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
 
             var responseTask = ChatGPT_diet.SendRequestToChatGPT(prompt);
 
-            Console.CursorVisible = false;
-            AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
+            //Console.CursorVisible = false;
+            //AnsiConsole.MarkupLine("[bold green]Generating Diet....[/]");
+            await AnsiConsole.Progress()
+            .AutoClear(false)
+            .StartAsync(async context =>
+            {
+                var progressTask = context.AddTask("[green]Generating Diet...[/]");
+
+                while (!responseTask.IsCompleted)
+                {
+                    // Simuluj progres (np. zwiększaj o losowy procent w przedziale)
+                    progressTask.Increment(1.0);
+
+                    // Krótkie opóźnienie, aby symulować postęp ładowania
+                    await Task.Delay(100);
+                }
+                if(responseTask.IsCompleted)
+                {
+                    progressTask.Value = 100;
+                    await Task.Delay(500);
+                }
+                // Ustaw pasek na pełny postęp po zakończeniu responseTask
+                
+               
+            });
 
             var response = await responseTask;
-
+            AnsiConsole.Clear(); 
             //Console.CursorVisible = true;
             //AnsiConsole.Clear();
             //AnsiConsole.MarkupLine("[bold green]Diet Plan:[/]");
@@ -72,8 +114,11 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     if (existingDiet.Any())
                     {
                         AnsiConsole.Clear();
+                        DietView.DietWriting();
+                        DietView.LineBettwenScetion();
                         AnsiConsole.MarkupLine("[turquoise2]You have already have diet plans:[/]");
                         AnsiConsole.MarkupLine(existingDiet[0].Text);
+                        
 
                         var option = Views.DietView.GetOptionDietExist();
 
@@ -84,7 +129,13 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                         if (option == "Generate Again")
                         {
                             AnsiConsole.Clear();
+                            DietView.DietWriting();
+                            DietView.LineBettwenScetion();
                             string newDiet = await GenerateDiet(dietRepository);
+                            DietView.DietWriting();
+                            DietView.LineBettwenScetion();
+                            await DisplayTextSlowly(newDiet, 1);
+                            Console.WriteLine();
                             AnsiConsole.Clear();
                             AnsiConsole.MarkupLine("[bold green]Diet Plan Generated:[/]");
                             AnsiConsole.MarkupLine(newDiet);
@@ -108,8 +159,12 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                     else
                     {
                         AnsiConsole.Clear();
+                        DietView.DietWriting();
+                        DietView.LineBettwenScetion();
                         var response = await GenerateDiet(dietRepository);
-                        AnsiConsole.MarkupLine(response);
+                        DietView.DietWriting();
+                        DietView.LineBettwenScetion();
+                        await DisplayTextSlowly(response, 1);
                         var option = Views.DietView.GetOptionDietNotExist();
                         if (option == "Save Diet")
                         {

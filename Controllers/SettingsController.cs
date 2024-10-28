@@ -27,7 +27,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 var exit = false;
                 while (!exit)
                 {
-                    Console.Clear();
+                    AnsiConsole.Clear();
                     SettingsView.ShowUserSettings(Program.user);
                     var option = Views.SettingsView.AddDataView();
                     // Obsługa wsybranej opcji
@@ -47,7 +47,9 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
                 var exit = false;
                 while (!exit)
                 {
-                    Console.Clear();
+                    AnsiConsole.Clear();
+                    SettingsView.SettingsWriting();
+                    SettingsView.LineBettwenScetion();
                     SettingsView.ShowUserSettings(Program.user);
                     var option = Views.SettingsView.UpdateDataView();
                     // Obsługa wsybranej opcji
@@ -92,5 +94,6 @@ namespace KCK_Project__Console_Pocket_trainer_.Controllers
             }
 
         }
+       
     }
 }
