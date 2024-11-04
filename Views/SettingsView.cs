@@ -48,7 +48,7 @@ namespace KCK_Project__Console_Pocket_trainer_.Views
                 var input = AnsiConsole.Ask<string>("Enter your [yellow]Height[/]:");
 
                 // Sprawdzamy, czy wejście jest liczbą i ma 3 cyfry
-                if (float.TryParse(input, out height) && input.Length == 2 && height < 300.00)
+                if (float.TryParse(input, out height) && input.Length == 3 && height < 300.00)
                 {
                     return height;
                 }
